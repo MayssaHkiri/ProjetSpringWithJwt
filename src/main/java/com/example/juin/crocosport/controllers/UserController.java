@@ -2,6 +2,7 @@ package com.example.juin.crocosport.controllers;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.juin.crocosport.jwt.JwtUtils;
+import com.example.juin.crocosport.models.ERole;
 import com.example.juin.crocosport.models.JwtResponse;
 import com.example.juin.crocosport.models.LoginRequest;
 import com.example.juin.crocosport.models.MessageResponse;
@@ -51,8 +53,11 @@ public class UserController {
 	    System.out.println("authentication -------- "+authentication);
 	    String jwt = jwtUtils.generateJwtToken(authentication);
 	    UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-	    Role role = (Role) userDetails.getAuthorities().iterator().next();
-
+	   // String  role =  userDetails.getAuthorities().iterator().next();
+	    String role = userDetails.getAuthorities().stream()
+                .map(item -> item.getAuthority())
+                .findFirst()
+                .orElse(null);
 	    System.out.println("userDetails ------- "+ userDetails.toString());
 	    return ResponseEntity.ok(
 	            new JwtResponse(jwt, userDetails.getId(), userDetails.getFirstName(), userDetails.getEmail(), role));
@@ -67,12 +72,37 @@ public class UserController {
 	    // Create new user's account
 	    User user = new User(signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getEmail(),
 	            encoder.encode(signUpRequest.getPassword()));
-
-	    Role userRole = signUpRequest.getRole();
+	    String strRole = signUpRequest.getRole();
+        
+	    /*Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+				.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 	    user.setRole(userRole);
+	   
+	    userRepository.save(user);*/
+	    if (strRole == null) {
+			Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+			user.setRole(userRole); 
+		} else {
+		
+				switch (strRole) {
+				case "admin":
+					
+					Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+					user.setRole(adminRole); 
+					System.out.println("here role admin" + strRole);
+					break;
+				default:
+					System.out.println("here role user" + strRole);
+					Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+					user.setRole(userRole); 
+				}
+			;
+		}
 	    
-	    userRepository.save(user);
-	    
+		userRepository.save(user);
 	    return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 	}
 

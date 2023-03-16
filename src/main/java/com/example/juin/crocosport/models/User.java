@@ -70,7 +70,7 @@ public class User {
 		this.email = email;
 		this.password = password;
 	}
-//signup constructor 
+
 	public User(@NotBlank String nom, @NotBlank String prenom, @NotBlank @Email String email, String password,
 			Role role) {
 		super();

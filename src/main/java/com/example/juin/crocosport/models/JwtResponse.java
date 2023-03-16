@@ -8,9 +8,9 @@ public class JwtResponse implements Serializable {
 	private Long id;
 	private String firstName;
 	private String email;
-	private Role role;
+	private String role ; 
 
-	public JwtResponse(String accessToken, Long id, String firstName, String email, Role role ) {
+	public JwtResponse(String accessToken, Long id, String firstName, String email, String role  ) {
 		this.token = accessToken;
 		this.id = id;
 		this.firstName = firstName;
@@ -58,13 +58,15 @@ public class JwtResponse implements Serializable {
 		this.firstName = firstName;
 	}
 
-	public Role getRole() {
+	public String getRole() {
 		return role;
 	}
 
-	public void setRole(Role role) {
+	public void setRole(String role) {
 		this.role = role;
 	}
+
+	
 
 	
 }
