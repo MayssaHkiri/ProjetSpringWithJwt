@@ -60,7 +60,7 @@ public class UserController {
                 .orElse(null);
 	    System.out.println("userDetails ------- "+ userDetails.toString());
 	    return ResponseEntity.ok(
-	            new JwtResponse(jwt, userDetails.getId(), userDetails.getFirstName(), userDetails.getEmail(), role));
+	            new JwtResponse(jwt, userDetails.getId(), userDetails.getFirstName(), userDetails.getLastName(), userDetails.getEmail(), role));
 	  
 	}
 	@PostMapping("/signup")

@@ -15,14 +15,16 @@ public class UserDetailsImpl implements UserDetails {
 	private Long id;
 	private String email;
 	private String firstName;
+	private String lastName ; 
 	private String password;
 	private GrantedAuthority authority;
 
-	public UserDetailsImpl(Long id, String email, String firstName, String password,
+	public UserDetailsImpl(Long id, String email, String firstName , String lastName , String password,
 			GrantedAuthority authority) {
 		this.id = id;
 		this.email = email;
 		this.firstName = firstName;
+		this.lastName = lastName ; 
 		this.password = password;
 		this.authority = authority;
 	}
@@ -30,7 +32,7 @@ public class UserDetailsImpl implements UserDetails {
 	
 	public static UserDetailsImpl build (User user ) {
 		GrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().getName().name()); 
-		return new UserDetailsImpl(user.getId(), user.getEmail(), user.getNom(), user.getPassword(), authority ); 
+		return new UserDetailsImpl(user.getId(), user.getEmail(), user.getNom() , user.getPrenom(), user.getPassword(), authority ); 
 	}
 
 	@Override
@@ -59,6 +61,10 @@ public class UserDetailsImpl implements UserDetails {
 
 	public String getFirstName() {
 		return firstName;
+	}
+    
+	public String getLastName() {
+		return lastName;
 	}
 
 	@Override

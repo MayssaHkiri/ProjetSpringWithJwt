@@ -17,10 +17,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	Optional<User> findByEmail(String email);
 	
 	
-	@Query(value = "SELECT * FROM users u INNER JOIN roles r ON u.ID_ROLE = r.ID_ROLE WHERE r.name = :roleNom",nativeQuery = true)
+	@Query(value = "SELECT * FROM Utilisateur u INNER JOIN roles r ON u.ID_ROLE = r.ID_ROLE WHERE r.name = :roleNom",nativeQuery = true)
     public List<User> ListByRole(@Param(value = "roleNom") String role);
 	
-	@Query(value = "SELECT * FROM users u INNER JOIN roles r ON u.ID_ROLE = r.ID_ROLE WHERE r.name = :roleNom and (u.nom LIKE %:recherche% OR u.prenom LIKE %:recherche% OR u.email LIKE %:recherche% ) ",nativeQuery = true)
+	@Query(value = "SELECT * FROM Utilisateur u INNER JOIN roles r ON u.ID_ROLE = r.ID_ROLE WHERE r.name = :roleNom and (u.nom LIKE %:recherche% OR u.prenom LIKE %:recherche% OR u.email LIKE %:recherche% ) ",nativeQuery = true)
 
 
 	public List<User> RechercherUtilisateur(@Param(value = "roleNom") String role ,@Param(value = "recherche") String critere);
