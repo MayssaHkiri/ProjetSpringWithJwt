@@ -1,19 +1,20 @@
 package com.example.gazelec.sport.controllers;
 
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
 
-import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
+
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import com.example.gazelec.sport.models.User;
-
+import com.example.gazelec.sport.respositories.UserRepository;
 import com.example.gazelec.sport.services.UserService;
 
 
@@ -36,9 +37,13 @@ import com.example.gazelec.sport.services.UserService;
 @RestController
 public class UserController {
     
-	
+	@Autowired
+	private UserRepository utilRepo ;
 	@Autowired 
 	private UserService userService ; 
+	@Autowired
+    private JavaMailSender javaMailSender;
+	
 	@PostMapping("/ajouter")
 	public User AjouterUtilisateur (@RequestBody User user ) {
 		return userService.AjouterUtilisateur(user);
@@ -73,5 +78,38 @@ public class UserController {
 	     List<User> UtilisateurEtDiscipline( @PathVariable String role  ){
 	        return userService.UtilisateursEtDiscipline(role);
 	   }
+	  
+	  
+	  @GetMapping("/forgot-password/{email}")
+	    public boolean findUserByemail(@PathVariable String email )  {
+		    boolean exist=true;
+	        String token = UUID.randomUUID().toString();
+	       Optional <User> user = userService.FindUserByMail(email);
+	        if (!user.isPresent()) {
+	            System.out.println("Utilisateur n'existe pas");
+	            exist=false;
+	        }
+	        else {
+	        	 
+	        // Generate password reset token
+	        
+	       User  userr = user.get();
+	       userr.setResetPasswordToken(token);
+	        userService.AjouterUtilisateur(userr);
+	        System.out.println("Utilisateur "+userr.getEmail()); 
+	        
+	        String Url = "http://localhost:4200/resetPassword?token=" + token;
+	        // Send password reset email
+	        SimpleMailMessage mail = new SimpleMailMessage();
+	        mail.setFrom("gazelecprojet@gmail.com");
+	        mail.setTo(userr.getEmail());
+	        mail.setSubject("Récupération du mot de passe");
+	        mail.setText("Pour récupérer le mot de passe cliquez sur ce lien : \n " + Url );
+	        System.out.println("Mail "+mail);
+	        javaMailSender.send(mail);
+	       
+	        }   return exist;
+	    }
+
 	
 }

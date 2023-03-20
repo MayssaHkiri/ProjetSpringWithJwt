@@ -31,6 +31,8 @@ public class User {
 	private String adresse ; 
 	private Long telephone ; 
 	
+	private String resetPasswordToken;
+	
 	@ManyToOne
 	@JoinColumn(name="ID_ROLE", referencedColumnName="ID_Role")
 	private Role role ;
@@ -72,8 +74,33 @@ public class User {
 		
 		
 	}
-
+ 
 	
+	
+	
+
+	public User(Long id, @NotBlank String nom, @NotBlank String prenom, @NotBlank @Email String email, String password,
+			String adresse, Long telephone, String resetPasswordToken, Role role, Discipline discipline) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.password = password;
+		this.adresse = adresse;
+		this.telephone = telephone;
+		this.resetPasswordToken = resetPasswordToken;
+		this.role = role;
+		this.discipline = discipline;
+	}
+
+	public String getResetPasswordToken() {
+		return resetPasswordToken;
+	}
+
+	public void setResetPasswordToken(String resetPasswordToken) {
+		this.resetPasswordToken = resetPasswordToken;
+	}
 
 	public Long getId() {
 		return id;

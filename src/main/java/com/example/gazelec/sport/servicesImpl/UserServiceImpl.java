@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import com.example.gazelec.sport.models.User;
@@ -17,6 +18,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private UserRepository utilRepo ; 
+	
+	
+	
 
 	@Override
 	public User AjouterUtilisateur(User U) {
@@ -65,6 +69,14 @@ public class UserServiceImpl implements UserService {
 		
 		return utilRepo.ListeUtilisateursetDisciplines(RoleNom);
 	}
+
+	@Override
+	public Optional<User> FindUserByMail(String email) {
+		
+		return utilRepo.findByEmail(email);
+	}
+	
+	
 
 	
 
