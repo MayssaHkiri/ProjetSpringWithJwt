@@ -15,10 +15,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.GetMapping; 
+import org.springframework.web.bind.annotation.PathVariable ; 
 import com.example.gazelec.sport.jwt.JwtUtils;
 import com.example.gazelec.sport.models.ERole;
 import com.example.gazelec.sport.models.JwtResponse;
@@ -47,6 +49,8 @@ public class AuthController {
 	PasswordEncoder encoder;
 	@Autowired
 	JwtUtils jwtUtils;
+	@Autowired 
+	UserRepository utilRepo ; 
 	@PostMapping("/login")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 	    Authentication authentication = authenticationManager.authenticate(
@@ -107,7 +111,29 @@ public class AuthController {
 		userRepository.save(user);
 	    return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 	}
-	
+	// Update profile 
+	@PutMapping("/UpdateCurrentUser")
+	public User UpdateProfile (@RequestBody User user) {
+	    Optional<User> optionalUser = utilRepo.findById(user.getId()); 
+	    if (optionalUser.isPresent()) { 
+	        User existingUser = optionalUser.get();
+	        existingUser.setNom(user.getNom()); 
+	        existingUser.setPrenom(user.getPrenom()); 
+	        existingUser.setEmail(user.getEmail());
+	        // Autres champs que vous souhaitez mettre à jour
+
+	        return utilRepo.save(existingUser);
+	    }
+	    return null; // ou une réponse appropriée si l'utilisateur n'a pas été trouvé
+	}
+	// Get current user 
+	@GetMapping("/{id}")
+	public User getCurrentUserById (@PathVariable Long id )
+	{
+		Optional<User> U = utilRepo.findById(id); 
+		return U.isPresent() ? U.get() : null;
+	}
+
 	
 
 
