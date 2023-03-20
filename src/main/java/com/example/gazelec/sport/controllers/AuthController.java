@@ -107,6 +107,8 @@ public class AuthController {
 		userRepository.save(user);
 	    return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 	}
+	
+	
 
 
 }
