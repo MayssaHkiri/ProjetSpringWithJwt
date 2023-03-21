@@ -70,13 +70,18 @@ public class User {
 		this.prenom = prenom;
 		this.email = email;
 		this.password = password;
-		
-		
-		
 	}
  
-	
-	
+	// constructeur pour addUserRequest 
+	public User(@NotBlank String nom, @NotBlank String prenom, @NotBlank @Email String email,
+			@NotBlank String adresse,  Long telephone) {
+		super();
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email ; 
+		this.adresse = adresse;
+		this.telephone = telephone;
+	}
 	
 
 	public User(Long id, @NotBlank String nom, @NotBlank String prenom, @NotBlank @Email String email, String password,
@@ -93,6 +98,8 @@ public class User {
 		this.role = role;
 		this.discipline = discipline;
 	}
+
+	
 
 	public String getResetPasswordToken() {
 		return resetPasswordToken;

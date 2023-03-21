@@ -2,12 +2,19 @@ package com.example.gazelec.sport.controllers;
 
 import java.util.Arrays;
 import java.util.Collections;
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
-
+import java.security.SecureRandom;
 import javax.validation.Valid;
+
+
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,6 +29,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping; 
 import org.springframework.web.bind.annotation.PathVariable ; 
 import com.example.gazelec.sport.jwt.JwtUtils;
+import com.example.gazelec.sport.models.AddUserRequest;
+import com.example.gazelec.sport.models.Discipline;
 import com.example.gazelec.sport.models.ERole;
 import com.example.gazelec.sport.models.JwtResponse;
 import com.example.gazelec.sport.models.LoginRequest;
@@ -30,6 +39,7 @@ import com.example.gazelec.sport.models.Role;
 import com.example.gazelec.sport.models.SignupRequest;
 import com.example.gazelec.sport.models.User;
 import com.example.gazelec.sport.models.UserDetailsImpl;
+import com.example.gazelec.sport.respositories.DisciplineRepository;
 import com.example.gazelec.sport.respositories.RoleRepository;
 import com.example.gazelec.sport.respositories.UserRepository;
 
@@ -46,11 +56,15 @@ public class AuthController {
 	@Autowired
 	RoleRepository roleRepository;
 	@Autowired
+	DisciplineRepository disRepo; 
+	@Autowired
 	PasswordEncoder encoder;
 	@Autowired
 	JwtUtils jwtUtils;
 	@Autowired 
 	UserRepository utilRepo ; 
+	@Autowired
+    private JavaMailSender javaMailSender;
 	@PostMapping("/login")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 	    Authentication authentication = authenticationManager.authenticate(
@@ -134,7 +148,87 @@ public class AuthController {
 		return U.isPresent() ? U.get() : null;
 	}
 
-	
+	// fonction pour génerer un mot de passe aléatoire : 
+	public static String generatePassword(int length) {
+	    String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	    SecureRandom random = new SecureRandom();
+	    StringBuilder sb = new StringBuilder(length);
 
+	    for (int i = 0; i < length; i++) {
+	        int randomIndex = random.nextInt(characters.length());
+	        sb.append(characters.charAt(randomIndex));
+	    }
+
+	    return sb.toString();
+	}
+	// add new user by the administrator 
+   @PostMapping("/addUser")
+   public ResponseEntity<?> addNewUser ( @Valid @RequestBody AddUserRequest addUserRequest )
+   {
+	  
+	   if (userRepository.existsByEmail(addUserRequest.getEmail())) {
+		   return ResponseEntity.badRequest().body(new MessageResponse("Error : Email is already taken ! ")) ; 
+	   }
+	   
+	   // add new user 
+	   User user = new User (addUserRequest.getFirstName() , addUserRequest.getLastName() , 
+			   addUserRequest.getEmail() , addUserRequest.getAdresse(), addUserRequest.getTelephone());  
+	   
+	   String strRole = addUserRequest.getRole(); 
+	   
+	   // affecter un role à l'utilisateur 
+	   if (strRole == "") {
+		   return ResponseEntity.badRequest().body(new MessageResponse("Error : Role non connu  ! ")) ; 
+	   }
+	   else {
+		   switch (strRole) {
+			case "moderateur":
+				
+				Role RoleModerateur = roleRepository.findByName(ERole.ROLE_MODERATEUR)
+						.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+				user.setRole(RoleModerateur); 
+				//affecter une discipline 
+				
+				 Optional<Discipline> D = disRepo.findById(addUserRequest.getId_discipline()) ; 	
+				
+				 if (!D.isPresent()) {
+					System.out.println("discipline n'existe pas ! ");
+					return ResponseEntity.badRequest().body(new MessageResponse("Error : la discipline ne se trouve pas ! ")) ; 
+				 }
+				 else {
+					 Discipline dis = D.get(); 
+					 user.setDiscipline(dis); 
+				 }
+				
+				System.out.println("here role moderateur " + strRole);
+				break;
+			default:
+				System.out.println("here role user" + strRole);
+				Role RoleGestionnaire  = roleRepository.findByName(ERole.ROLE_GESTIONNAIRE)
+						.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+				user.setRole(RoleGestionnaire); 
+			}
+		;
+		// l'appel de la methode generatePassword 
+		String password = generatePassword(8); 
+		user.setPassword(encoder.encode(password));
+		// l'envoie du mail contenant le password 
+		
+	        // Send password reset email
+	        SimpleMailMessage mail = new SimpleMailMessage();
+	        mail.setFrom("gazelecprojet@gmail.com");
+	        mail.setTo(addUserRequest.getEmail());
+	        mail.setSubject("Nouveau mot de passe ");
+	        mail.setText("Vous etes un nouveau utilisateur chez Gazelec.tn  \n vous trouvez votre mot de passe: \n " + password  );
+	        System.out.println("Mail "+mail);
+	        javaMailSender.send(mail);
+	       
+		   
+	   }
+	   
+	    userRepository.save(user);
+	    return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+	     
+   }
 
 }
