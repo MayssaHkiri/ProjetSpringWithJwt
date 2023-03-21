@@ -1,0 +1,60 @@
+[33mcommit 7af878a5724a6346a2a2a15ed4a2d8a39dfa2369[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;32mkhouloud[m[33m)[m
+Author: MayssaHkiri <may26saa@gmail.com>
+Date:   Mon Mar 20 11:41:22 2023 +0100
+
+    rien
+
+[33mcommit 632d1e4885b5b370435b80003c966eb539011cf1[m
+Author: khouloud <khouloudmhamdi7@gmail.com>
+Date:   Mon Mar 20 01:54:17 2023 +0100
+
+    forget password
+
+[33mcommit da9c3f538abdbbdd920c6c0f2b409b404d390f27[m[33m ([m[1;31morigin/khouloud[m[33m)[m
+Author: khouloud <khouloudmhamdi7@gmail.com>
+Date:   Sat Mar 18 16:54:20 2023 +0100
+
+    controller
+
+[33mcommit 41be7add90d55af726056d90ee287cbf50bf7ade[m
+Merge: 6a56446 fbfbfa2
+Author: khouloud <khouloudmhamdi7@gmail.com>
+Date:   Sat Mar 18 13:41:11 2023 +0100
+
+    requete
+
+[33mcommit 6a56446c47c5a4f03ac292eff0f9150ac81eb49d[m
+Author: khouloud <khouloudmhamdi7@gmail.com>
+Date:   Sat Mar 18 12:05:38 2023 +0100
+
+    user service
+
+[33mcommit fbfbfa29d15577c20a5fd5ea8029b4745950f6ce[m
+Author: MayssaHkiri <may26saa@gmail.com>
+Date:   Sat Mar 18 11:24:40 2023 +0100
+
+    auth and user controller creation
+
+[33mcommit 7bd1817bb57bab5299b13a2c625b0753db2e3bb9[m
+Author: MayssaHkiri <may26saa@gmail.com>
+Date:   Sat Mar 18 10:11:05 2023 +0100
+
+    last modifications
+
+[33mcommit 228ee6873f1b215a327635d3c13370502e1ffa21[m
+Author: MayssaHkiri <may26saa@gmail.com>
+Date:   Thu Mar 16 23:34:54 2023 +0100
+
+    adding events and entraineur models
+
+[33mcommit 6ca40d3dad131358df606cfcbf8cd1138eb6c319[m
+Author: MayssaHkiri <may26saa@gmail.com>
+Date:   Thu Mar 16 18:43:40 2023 +0100
+
+    login and signup work
+
+[33mcommit 6a5f777d50f49c9444fca73b66335960e49fd7d9[m
+Author: MayssaHkiri <may26saa@gmail.com>
+Date:   Thu Mar 16 14:27:48 2023 +0100
+
+    My first commit

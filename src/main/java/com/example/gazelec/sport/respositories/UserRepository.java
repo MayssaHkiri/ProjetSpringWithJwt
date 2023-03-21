@@ -14,6 +14,8 @@ import com.example.gazelec.sport.models.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 	Boolean existsByEmail(String email);
 	Optional<User> findByEmail(String email);
+	@Query(value = "SELECT * FROM utilisateur WHERE reset_password_token = :token",nativeQuery = true)
+	 Optional<User> findByResetToken(@Param(value = "token") String token);
 	
 	
 	@Query(value = "SELECT * FROM utilisateur u INNER JOIN roles r ON u.id_role = r.id_role WHERE r.name = :roleNom",nativeQuery = true)

@@ -16,4 +16,6 @@ public interface UserService {
 	public List< User>RechercherUtilisateur (String RoleNom ,String recherche);
 	public List< User>UtilisateursEtDiscipline (String RoleNom);
 	public Optional<User>FindUserByMail (String email);
+	public Optional<User>FindUserByToken (String token);
+	
 }
