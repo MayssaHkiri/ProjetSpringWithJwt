@@ -99,7 +99,7 @@ public class UserController {
 	        
 	       User  userr = user.get();
 	       userr.setResetPasswordToken(token);
-	        userService.AjouterUtilisateur(userr);
+	        utilRepo.save(userr);
 	        System.out.println("Utilisateur "+userr.getEmail()); 
 	        
 	        String Url = "http://localhost:4200/resetPassword?token=" + token;
@@ -132,7 +132,7 @@ public class UserController {
 	 				userr.setPassword( encoder.encode(password.trim()));
 	 				userr.setResetPasswordToken(null);
 	 				 System.out.println("Mot de passe"+userr.getPassword());
-	 				 userService.AjouterUtilisateur(userr);
+	 				 utilRepo.save(userr);
 	 				
 	      			
 	 			}return existToken;
