@@ -177,7 +177,7 @@ public class AuthController {
 	   String strRole = addUserRequest.getRole(); 
 	   
 	   // affecter un role à l'utilisateur 
-	   if (strRole == "") {
+	   if (strRole == null) {
 		   return ResponseEntity.badRequest().body(new MessageResponse("Error : Role non connu  ! ")) ; 
 	   }
 	   else {
