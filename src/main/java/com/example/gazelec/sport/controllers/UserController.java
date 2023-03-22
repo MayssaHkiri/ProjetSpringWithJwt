@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,6 +44,8 @@ public class UserController {
 	private UserService userService ; 
 	@Autowired
     private JavaMailSender javaMailSender;
+	@Autowired
+	PasswordEncoder encoder;
 	
 	@PostMapping("/ajouter")
 	public User AjouterUtilisateur (@RequestBody User user ) {
@@ -83,6 +86,7 @@ public class UserController {
 	  @GetMapping("/forgot-password/{email}")
 	    public boolean findUserByemail(@PathVariable String email )  {
 		    boolean exist=true;
+		    System.out.println("Utilisateur"+email);
 	        String token = UUID.randomUUID().toString();
 	       Optional <User> user = userService.FindUserByMail(email);
 	        if (!user.isPresent()) {
@@ -95,7 +99,7 @@ public class UserController {
 	        
 	       User  userr = user.get();
 	       userr.setResetPasswordToken(token);
-	        userService.AjouterUtilisateur(userr);
+	        utilRepo.save(userr);
 	        System.out.println("Utilisateur "+userr.getEmail()); 
 	        
 	        String Url = "http://localhost:4200/resetPassword?token=" + token;
@@ -110,6 +114,29 @@ public class UserController {
 	       
 	        }   return exist;
 	    }
-
+	  @GetMapping("/resetPassword/{resetToken}/{password}")
+	    public boolean findUserByResetToken (@PathVariable String resetToken,@PathVariable String password) {
+		  boolean existToken=true;
+		  
+		 System.out.println("Get  User By resetToken.."+resetToken);
+		 System.out.println("Mot de passe"+password);
+	            
+	             Optional<User> user = userService.FindUserByToken(resetToken);
+	             if (!user.isPresent()) {
+	 				System.out.println( "We didn't find an account for that Token");
+	 				existToken=false;
+	 			} else {
+	 				User userr = user.get();
+	 			
+	 				
+	 				userr.setPassword( encoder.encode(password.trim()));
+	 				userr.setResetPasswordToken(null);
+	 				 System.out.println("Mot de passe"+userr.getPassword());
+	 				 utilRepo.save(userr);
+	 				
+	      			
+	 			}return existToken;
+	   }
+	  
 	
 }
