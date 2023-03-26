@@ -1,6 +1,7 @@
 package com.example.gazelec.sport.controllers;
 
 import java.util.Arrays;
+import org.springframework.security.access.prepost.PreAuthorize;
 import java.util.Collections;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
@@ -42,9 +43,9 @@ import com.example.gazelec.sport.models.UserDetailsImpl;
 import com.example.gazelec.sport.respositories.DisciplineRepository;
 import com.example.gazelec.sport.respositories.RoleRepository;
 import com.example.gazelec.sport.respositories.UserRepository;
-
-
-
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("api/auth")
@@ -162,7 +163,9 @@ public class AuthController {
 	    return sb.toString();
 	}
 	// add new user by the administrator 
+   
    @PostMapping("/addUser")
+  // @PreAuthorize("hasRole('ROLE_MODERATEUR')")
    public ResponseEntity<?> addNewUser ( @Valid @RequestBody AddUserRequest addUserRequest )
    {
 	  
