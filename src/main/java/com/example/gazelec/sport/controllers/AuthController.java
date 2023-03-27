@@ -233,5 +233,14 @@ public class AuthController {
 	    return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 	     
    }
+   @GetMapping("/ExistEmail/{email}")
+   public boolean existmail (@PathVariable String email )
+   {
+	    boolean exist=false;
+	    if(userRepository.existsByEmail(email))
+	    {exist=true;}
+	    
+	    return exist;
+   }
 
 }
