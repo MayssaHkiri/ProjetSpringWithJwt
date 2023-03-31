@@ -25,6 +25,7 @@ public class membre_famille {
 	private String prenom;
 	private String relation;
 	
+	
 	@ManyToOne
 	@JoinColumn(name="id_user", referencedColumnName="id")
 	private User user ;
