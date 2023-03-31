@@ -101,7 +101,7 @@ public class AuthController {
 	   
 	    userRepository.save(user);*/
 	    if (strRole == null) {
-			Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+			Role userRole = roleRepository.findByName(ERole.ADHERENT)
 					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 			user.setRole(userRole); 
 		} else {
@@ -109,14 +109,14 @@ public class AuthController {
 				switch (strRole) {
 				case "admin":
 					
-					Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+					Role adminRole = roleRepository.findByName(ERole.ADMIN)
 							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 					user.setRole(adminRole); 
 					System.out.println("here role admin" + strRole);
 					break;
 				default:
 					System.out.println("here role user" + strRole);
-					Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+					Role userRole = roleRepository.findByName(ERole.ADHERENT)
 							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 					user.setRole(userRole); 
 				}
@@ -187,7 +187,7 @@ public class AuthController {
 		   switch (strRole) {
 			case "moderateur":
 				
-				Role RoleModerateur = roleRepository.findByName(ERole.ROLE_MODERATEUR)
+				Role RoleModerateur = roleRepository.findByName(ERole.MODERATEUR)
 						.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 				user.setRole(RoleModerateur); 
 				//affecter une discipline 
@@ -207,7 +207,7 @@ public class AuthController {
 				break;
 			default:
 				System.out.println("here role user" + strRole);
-				Role RoleGestionnaire  = roleRepository.findByName(ERole.ROLE_GESTIONNAIRE)
+				Role RoleGestionnaire  = roleRepository.findByName(ERole.GESTIONNAIRE)
 						.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 				user.setRole(RoleGestionnaire); 
 			}
