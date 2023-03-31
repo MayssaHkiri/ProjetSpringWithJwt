@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -25,6 +26,13 @@ public class Discipline {
 	@JsonIgnore
 	@OneToMany (mappedBy="discipline")
 	private List<User> utilisateurs ;
+	
+	@ManyToMany(mappedBy="disciplines")
+	private List<User> users;
+	
+	@ManyToMany(mappedBy="disciplines")
+	private List<membre_famille> membres;
+
 	
 	public Long getId() {
 		return id;

@@ -3,6 +3,7 @@ package com.example.gazelec.sport.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -52,7 +53,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-				.antMatchers("/api/auth/**").permitAll().antMatchers("/utilisateurs/**").permitAll().antMatchers("/disciplines/**").permitAll().anyRequest()
+				.antMatchers("/api/auth//UpdateCurrentUser").permitAll()
+				.antMatchers("/disciplines/**").permitAll().antMatchers("/api/auth/**").permitAll()
+				//.antMatchers(HttpMethod.POST,"/api/auth/addUser").hasRole("ADHERENT")
+				//.antMatchers(HttpMethod.GET,"/api/auth/ExistEmail/{email}").permitAll()
+				
+			
+				.antMatchers(HttpMethod.GET,"/utilisateurs/**").permitAll().anyRequest()
 				.authenticated();
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 	}

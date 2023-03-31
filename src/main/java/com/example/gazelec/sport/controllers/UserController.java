@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.gazelec.sport.models.User;
 import com.example.gazelec.sport.respositories.UserRepository;
@@ -49,6 +49,8 @@ public class UserController {
 	
 	@PostMapping("/ajouter")
 	public User AjouterUtilisateur (@RequestBody User user ) {
+		
+		
 		return userService.AjouterUtilisateur(user);
 	}
 	@GetMapping("/Consulter")
