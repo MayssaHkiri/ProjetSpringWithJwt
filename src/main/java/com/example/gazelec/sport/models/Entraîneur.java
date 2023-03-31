@@ -1,6 +1,10 @@
 package com.example.gazelec.sport.models;
 
-import java.util.Date;
+
+
+
+import java.time.LocalDate;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -24,7 +29,8 @@ public class Entraîneur {
 	private String prénom;
 	private String email;
 	private String téléphone;
-	private Date Date_De_Naissance;
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private LocalDate Date_De_Naissance  ;
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="Id_Discipline", referencedColumnName="Id_Discipline")
@@ -59,19 +65,27 @@ public class Entraîneur {
 	public void setTéléphone(String téléphone) {
 		this.téléphone = téléphone;
 	}
-	public Date getDate_De_Naissance() {
+	/*public Date getDate_De_Naissance() {
 		return Date_De_Naissance;
 	}
-	public void setDate_De_Naissance(Date date_De_Naissance) {
-		Date_De_Naissance = date_De_Naissance;
-	}
+
+	public void setDate_De_Naissance(String  dateNaissance ) {
+		 DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
+		    LocalDate localDate = LocalDate.parse(dateNaissance, formatter);
+		    this.Date_De_Naissance = java.sql.Date.valueOf(localDate);
+	}*/
 	public Discipline getDiscipline() {
 		return discipline;
 	}
+	
 	public void setDiscipline(Discipline discipline) {
 		this.discipline = discipline;
 	}
-	public Entraîneur(Long id, String nom, String prénom, String email, String téléphone, Date date_De_Naissance,
+	
+	
+	
+	
+	public Entraîneur(Long id, String nom, String prénom, String email, String téléphone, LocalDate date_De_Naissance,
 			Discipline discipline) {
 		super();
 		this.id = id;
@@ -82,9 +96,15 @@ public class Entraîneur {
 		Date_De_Naissance = date_De_Naissance;
 		this.discipline = discipline;
 	}
+	public LocalDate getDate_De_Naissance() {
+		return Date_De_Naissance;
+	}
+	public void setDate_De_Naissance(LocalDate date_De_Naissance) {
+		Date_De_Naissance = date_De_Naissance;
+	}
 	public Entraîneur() {
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 	
 }

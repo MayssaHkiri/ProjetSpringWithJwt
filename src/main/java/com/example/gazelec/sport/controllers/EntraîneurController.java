@@ -32,16 +32,16 @@ public class EntraîneurController {
 	public  List<Entraîneur> ListerUtilisateurs (){
 		return EnterService.ConsulterEntraîneurs();
 	}
-	@GetMapping ("Rechercher/{id}")
+	@GetMapping ("/{id}")
 	public Entraîneur ConsulterUtilisateur ( @PathVariable Long id) {
 		return EnterService.ConsulterEntraîneurById(id);
 	}
-	@PutMapping ("Modifier/{id}")
+	@PutMapping ("Modifier")
 	public Entraîneur ModifierUtilisateur (@RequestBody Entraîneur En )
 	{
 		return EnterService.ModifierEntraîneur(En);
 	}
-	@DeleteMapping ("Supprimer/{id}")
+	@DeleteMapping ("/{id}")
 	public void SupprimerUtilisateur (@PathVariable Long id )
 	{
 		EnterService.SupprimeEntraîneurById(id);
