@@ -1,6 +1,7 @@
 package com.example.gazelec.sport.models;
 
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -39,6 +40,15 @@ public class User {
 	
 	private String adresse ; 
 	private Long telephone ;
+	 
+	
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private Date date_naissance  ;
+    private String lieu_naissance;
+	 private String profession;
+	 private String stegiste;
+	 private String matricule;
+	 
 	
 	
 	private String resetPasswordToken;
@@ -96,22 +106,57 @@ public class User {
 	}
 	
 
-	public User(Long id, @NotBlank String nom, @NotBlank String prenom, @NotBlank @Email String email, String password,
-			String adresse, Long telephone, String resetPasswordToken, Role role, Discipline discipline) {
-		super();
-		this.id = id;
-		this.nom = nom;
-		this.prenom = prenom;
-		this.email = email;
-		this.password = password;
-		this.adresse = adresse;
-		this.telephone = telephone;
-		this.resetPasswordToken = resetPasswordToken;
-		this.role = role;
-		this.discipline = discipline;
-	}
+	
 
 	
+
+	public Date getDate_naissance() {
+		return date_naissance;
+	}
+
+	public void setDate_naissance(Date date_naissance) {
+		this.date_naissance = date_naissance;
+	}
+
+	public String getLieu_naissance() {
+		return lieu_naissance;
+	}
+
+	public void setLieu_naissance(String lieu_naissance) {
+		this.lieu_naissance = lieu_naissance;
+	}
+
+	public String getProfession() {
+		return profession;
+	}
+
+	public void setProfession(String profession) {
+		this.profession = profession;
+	}
+
+	public String getStegiste() {
+		return stegiste;
+	}
+
+	public void setStegiste(String stegiste) {
+		this.stegiste = stegiste;
+	}
+
+	public String getMatricule() {
+		return matricule;
+	}
+
+	public void setMatricule(String matricule) {
+		this.matricule = matricule;
+	}
+
+	public List<Discipline> getDisciplines() {
+		return disciplines;
+	}
+
+	public void setDisciplines(List<Discipline> disciplines) {
+		this.disciplines = disciplines;
+	}
 
 	public String getResetPasswordToken() {
 		return resetPasswordToken;
@@ -191,6 +236,29 @@ public class User {
 
 	public void setDiscipline(Discipline discipline) {
 		this.discipline = discipline;
+	}
+
+	public User(Long id, @NotBlank String nom, @NotBlank String prenom, @NotBlank @Email String email, String password,
+			String adresse, Long telephone, Date date_naissance, String lieu_naissance, String profession,
+			String stegiste, String matricule, String resetPasswordToken, Role role, Discipline discipline,
+			List<Discipline> disciplines) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.password = password;
+		this.adresse = adresse;
+		this.telephone = telephone;
+		this.date_naissance = date_naissance;
+		this.lieu_naissance = lieu_naissance;
+		this.profession = profession;
+		this.stegiste = stegiste;
+		this.matricule = matricule;
+		this.resetPasswordToken = resetPasswordToken;
+		this.role = role;
+		this.discipline = discipline;
+		this.disciplines = disciplines;
 	}
 
 	

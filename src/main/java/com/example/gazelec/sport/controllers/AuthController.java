@@ -135,6 +135,14 @@ public class AuthController {
 	        existingUser.setNom(user.getNom()); 
 	        existingUser.setPrenom(user.getPrenom()); 
 	        existingUser.setEmail(user.getEmail());
+	        existingUser.setTelephone(user.getTelephone());
+	        existingUser.setAdresse(user.getAdresse());
+	        existingUser.setDate_naissance(user.getDate_naissance());
+	        existingUser.setLieu_naissance(user.getLieu_naissance());
+	        existingUser.setProfession(user.getProfession());
+	        existingUser.setMatricule(user.getMatricule());
+	        existingUser.setStegiste(user.getStegiste());
+	        
 	        // Autres champs que vous souhaitez mettre à jour
 
 	        return utilRepo.save(existingUser);
