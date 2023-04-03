@@ -3,6 +3,7 @@ package com.example.gazelec.sport.models;
 
 
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 
@@ -30,7 +31,7 @@ public class Entraîneur {
 	private String email;
 	private String téléphone;
 	@JsonFormat(pattern = "yyyy-MM-dd")
-	private LocalDate Date_De_Naissance  ;
+	private Date naissance   ;
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="Id_Discipline", referencedColumnName="Id_Discipline")
@@ -65,15 +66,7 @@ public class Entraîneur {
 	public void setTéléphone(String téléphone) {
 		this.téléphone = téléphone;
 	}
-	/*public Date getDate_De_Naissance() {
-		return Date_De_Naissance;
-	}
-
-	public void setDate_De_Naissance(String  dateNaissance ) {
-		 DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
-		    LocalDate localDate = LocalDate.parse(dateNaissance, formatter);
-		    this.Date_De_Naissance = java.sql.Date.valueOf(localDate);
-	}*/
+	
 	public Discipline getDiscipline() {
 		return discipline;
 	}
@@ -85,23 +78,31 @@ public class Entraîneur {
 	
 	
 	
-	public Entraîneur(Long id, String nom, String prénom, String email, String téléphone, LocalDate date_De_Naissance,
-			Discipline discipline) {
+	public Entraîneur(String nom, String prénom, String email, String téléphone, Date naissance) {
 		super();
-		this.id = id;
 		this.nom = nom;
 		this.prénom = prénom;
 		this.email = email;
 		this.téléphone = téléphone;
-		Date_De_Naissance = date_De_Naissance;
+		this.naissance = naissance;
+	}
+	public Entraîneur(String nom, String prénom, String email, String téléphone, Date naissance,
+			Discipline discipline) {
+		super();
+		this.nom = nom;
+		this.prénom = prénom;
+		this.email = email;
+		this.téléphone = téléphone;
+		this.naissance = naissance;
 		this.discipline = discipline;
 	}
-	public LocalDate getDate_De_Naissance() {
-		return Date_De_Naissance;
+	public Date getNaissance() {
+		return naissance;
 	}
-	public void setDate_De_Naissance(LocalDate date_De_Naissance) {
-		Date_De_Naissance = date_De_Naissance;
+	public void setNaissance(Date naissance) {
+		this.naissance = naissance;
 	}
+	
 	public Entraîneur() {
 		super();
 		
