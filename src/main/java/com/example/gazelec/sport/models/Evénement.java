@@ -1,7 +1,5 @@
 package com.example.gazelec.sport.models;
-
-import java.time.LocalDate;
-import java.util.Date;
+import java.sql.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,8 +9,6 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 @Entity
 @Table(name="evenement")
 
@@ -20,19 +16,19 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public class Evénement {
 	 @Id
 	 @GeneratedValue(strategy=GenerationType.AUTO)
-	
-	 private Long Id_Evénement;
+	 private Long id;
 	 private String titre;
 	 private String lieu;
 	 private String fileName ; 
 	 @JsonFormat(pattern = "yyyy-MM-dd")
-		private LocalDate date  ;
+		private Date date  ;
 	 private String description;
-	public Long getId_Evénement() {
-		return Id_Evénement;
+	
+	public Long getId() {
+		return id;
 	}
-	public void setId_Evénement(Long id_Evénement) {
-		Id_Evénement = id_Evénement;
+	public void setId(Long id) {
+		this.id = id;
 	}
 	public String getTitre() {
 		return titre;
@@ -54,12 +50,6 @@ public class Evénement {
 		this.description = description;
 	}
 	
-	public LocalDate getDate() {
-		return date;
-	}
-	public void setDate(LocalDate date) {
-		this.date = date;
-	}
 	
 	public String getFileName() {
 		return fileName;
@@ -67,21 +57,29 @@ public class Evénement {
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
-	public Evénement(Long id_Evénement, String titre, String lieu, String fileName, LocalDate date,
-			String description) {
+	
+	
+	
+	
+	public Evénement(Long id, String titre, String lieu, String fileName, Date date, String description) {
 		super();
-		Id_Evénement = id_Evénement;
+		this.id = id;
 		this.titre = titre;
 		this.lieu = lieu;
 		this.fileName = fileName;
 		this.date = date;
 		this.description = description;
 	}
-	
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
 	@Override
 	public String toString() {
-		return "Evénement [Id_Evénement=" + Id_Evénement + ", titre=" + titre + ", lieu=" + lieu + ", fileName="
-				+ fileName + ", date=" + date + ", description=" + description + "]";
+		return "Evénement [id=" + id + ", titre=" + titre + ", lieu=" + lieu + ", fileName=" + fileName + ", date="
+				+ date + ", description=" + description + "]";
 	}
 	public Evénement() {
 		super();

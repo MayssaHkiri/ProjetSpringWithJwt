@@ -5,9 +5,9 @@ import java.util.List;
 import com.example.gazelec.sport.models.Entraîneur;
 
 public interface EntraîneurService {
-	public  Entraîneur AjouterEntraîneur(Entraîneur e ); 
+	public  Entraîneur AjouterEntraîneur(Entraîneur e , Long id  ); 
 	public List<Entraîneur> ConsulterEntraîneurs () ; 
 	public Entraîneur ConsulterEntraîneurById (Long id); 
 	public void SupprimeEntraîneurById (Long id); 
-	public Entraîneur ModifierEntraîneur (Entraîneur En ); 
+	public Entraîneur ModifierEntraîneur (Entraîneur En , Long id  ); 
 }

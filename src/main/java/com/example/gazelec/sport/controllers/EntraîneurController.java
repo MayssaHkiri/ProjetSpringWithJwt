@@ -23,10 +23,10 @@ public class EntraîneurController {
 	@Autowired
 	private EntraîneurService EnterService;
 	
-	@PostMapping("/ajouter")
-	public Entraîneur ajouterEvénement (@RequestBody Entraîneur  E)
+	@PostMapping("/ajouter/{id}")
+	public Entraîneur ajouterEvénement (@RequestBody Entraîneur  E , @PathVariable  Long id  )
 	{
-		return EnterService.AjouterEntraîneur(E);
+		return EnterService.AjouterEntraîneur(E , id );
 	}
 	@GetMapping("/Consulter")
 	public  List<Entraîneur> ListerUtilisateurs (){
@@ -37,9 +37,9 @@ public class EntraîneurController {
 		return EnterService.ConsulterEntraîneurById(id);
 	}
 	@PutMapping ("Modifier")
-	public Entraîneur ModifierUtilisateur (@RequestBody Entraîneur En )
+	public Entraîneur ModifierUtilisateur (@RequestBody Entraîneur En , @PathVariable Long id  )
 	{
-		return EnterService.ModifierEntraîneur(En);
+		return EnterService.ModifierEntraîneur(En , id );
 	}
 	@DeleteMapping ("/{id}")
 	public void SupprimerUtilisateur (@PathVariable Long id )
