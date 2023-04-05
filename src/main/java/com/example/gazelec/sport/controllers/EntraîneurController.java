@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.gazelec.sport.models.Entraîneur;
+import com.example.gazelec.sport.models.User;
+import com.example.gazelec.sport.respositories.EntraîneurRepository;
 import com.example.gazelec.sport.services.EntraîneurService;
 
 @RequestMapping ("/entraineurs")
@@ -22,6 +24,8 @@ import com.example.gazelec.sport.services.EntraîneurService;
 public class EntraîneurController {
 	@Autowired
 	private EntraîneurService EnterService;
+	@Autowired 
+	private EntraîneurRepository entraineurRepo ; 
 	
 	@PostMapping("/ajouter/{id}")
 	public Entraîneur ajouterEvénement (@RequestBody Entraîneur  E , @PathVariable  Long id  )
@@ -32,11 +36,15 @@ public class EntraîneurController {
 	public  List<Entraîneur> ListerUtilisateurs (){
 		return EnterService.ConsulterEntraîneurs();
 	}
+	@GetMapping("/consultation")
+	 public List<Entraîneur> ListeEntraineursetDisciplines(){
+		return EnterService.ConsulterEntraîneurs() ; 
+	}
 	@GetMapping ("/{id}")
 	public Entraîneur ConsulterUtilisateur ( @PathVariable Long id) {
 		return EnterService.ConsulterEntraîneurById(id);
 	}
-	@PutMapping ("Modifier")
+	@PutMapping ("Modifier/{id}")
 	public Entraîneur ModifierUtilisateur (@RequestBody Entraîneur En , @PathVariable Long id  )
 	{
 		return EnterService.ModifierEntraîneur(En , id );
@@ -46,6 +54,18 @@ public class EntraîneurController {
 	{
 		EnterService.SupprimeEntraîneurById(id);
 	}
-	
+	@GetMapping("/ExistEmail/{email}")
+	   public boolean existmail (@PathVariable String email )
+	   {
+		    boolean exist=false;
+		    if(entraineurRepo.existsByEmail(email))
+		    {exist=true;}
+		    
+		    return exist;
+	   }
+	@GetMapping("/rechercher/{critere}")
+	public List<Entraîneur> RechercherEntraineurs (@PathVariable String  critere  ) {
+		 return EnterService.RechercherEntraineurs(critere) ; 
+	}
 
 }

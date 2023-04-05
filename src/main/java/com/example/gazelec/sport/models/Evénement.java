@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -17,11 +18,14 @@ public class Evénement {
 	 @Id
 	 @GeneratedValue(strategy=GenerationType.AUTO)
 	 private Long id;
+	 @NotBlank
 	 private String titre;
+	 @NotBlank
 	 private String lieu;
 	 private String fileName ; 
 	 @JsonFormat(pattern = "yyyy-MM-dd")
 		private Date date  ;
+	 @NotBlank
 	 private String description;
 	
 	public Long getId() {
@@ -61,7 +65,9 @@ public class Evénement {
 	
 	
 	
-	public Evénement(Long id, String titre, String lieu, String fileName, Date date, String description) {
+	
+	public Evénement(Long id, @NotBlank String titre, @NotBlank String lieu, String fileName, Date date,
+			@NotBlank String description) {
 		super();
 		this.id = id;
 		this.titre = titre;

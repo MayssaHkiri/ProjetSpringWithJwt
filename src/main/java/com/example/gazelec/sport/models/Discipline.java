@@ -21,6 +21,8 @@ public class Discipline {
 	@GeneratedValue(strategy = GenerationType.AUTO )
     private Long id ; 
 	private String discipline;
+	
+	@JsonIgnore
 	@OneToMany (mappedBy="discipline")
 	 private List<Entraîneur> entraineurs ;
 	@JsonIgnore
