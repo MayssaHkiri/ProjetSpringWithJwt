@@ -7,7 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -27,11 +29,13 @@ public class Discipline {
 	@OneToMany (mappedBy="discipline")
 	private List<User> utilisateurs ;
 	
-	@ManyToMany(mappedBy="disciplines")
-	private List<User> users;
+	@JsonIgnore
+	@OneToMany (mappedBy="discipline")
+	private List<Inscription> inscriptions ;
 	
 	
-
+	
+	
 	
 	public Long getId() {
 		return id;
@@ -52,13 +56,7 @@ public class Discipline {
 	public void setEntraineurs(List<Entraîneur> entraineurs) {
 		this.entraineurs = entraineurs;
 	}
-	public Discipline(Long id, String discipline, List<Entraîneur> entraineurs, List<User> utilisateurs) {
-		super();
-		this.id = id;
-		this.discipline = discipline;
-		this.entraineurs = entraineurs;
-		this.utilisateurs = utilisateurs;
-	}
+	
 	public Discipline() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -68,6 +66,21 @@ public class Discipline {
 	}
 	public void setUtilisateurs(List<User> utilisateurs) {
 		this.utilisateurs = utilisateurs;
+	}
+	public List<Inscription> getInscriptions() {
+		return inscriptions;
+	}
+	public void setInscriptions(List<Inscription> inscriptions) {
+		this.inscriptions = inscriptions;
+	}
+	public Discipline(Long id, String discipline, List<Entraîneur> entraineurs, List<User> utilisateurs,
+			List<Inscription> inscriptions) {
+		super();
+		this.id = id;
+		this.discipline = discipline;
+		this.entraineurs = entraineurs;
+		this.utilisateurs = utilisateurs;
+		this.inscriptions = inscriptions;
 	}
 	
 	

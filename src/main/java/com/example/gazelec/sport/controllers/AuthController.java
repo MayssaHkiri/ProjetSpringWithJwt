@@ -149,6 +149,7 @@ public class AuthController {
 	    }
 	    return null; // ou une réponse appropriée si l'utilisateur n'a pas été trouvé
 	}
+	
 	// Get current user 
 	@GetMapping("/{id}")
 	public User getCurrentUserById (@PathVariable Long id )

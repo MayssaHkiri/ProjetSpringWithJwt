@@ -13,9 +13,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity 
 @Table(name="membre_famille") 
@@ -40,9 +42,11 @@ public class membre_famille {
 	@ManyToOne
 	@JoinColumn(name="id_user", referencedColumnName="id")
 	private User user ;
-	 @ManyToMany
-	 @JoinTable(name="inscription", joinColumns=  @JoinColumn(name="id_membre_famille"), inverseJoinColumns= @JoinColumn (name="id_discipline"))
-	 private List<Discipline> disciplines;
+	
+	@JsonIgnore
+	@OneToMany (mappedBy="membre_famille")
+	private List<Inscription> inscriptions ;
+	
 	public Long getId() {
 		return id;
 	}
@@ -73,25 +77,20 @@ public class membre_famille {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public List<Discipline> getDisciplines() {
-		return disciplines;
-	}
-	public void setDisciplines(List<Discipline> disciplines) {
-		this.disciplines = disciplines;
-	}
+	
 	public membre_famille() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public membre_famille(Long id, String nom, String prenom, String relation, User user,
-			List<Discipline> disciplines) {
+	public membre_famille(Long id, String nom, String prenom, String relation, User user
+			) {
 		super();
 		this.id = id;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.relation = relation;
 		this.user = user;
-		this.disciplines = disciplines;
+		
 	}
 	public String getEmail() {
 		return email;
@@ -99,17 +98,7 @@ public class membre_famille {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public membre_famille(Long id, String nom, String prenom, String email, String relation, User user,
-			List<Discipline> disciplines) {
-		super();
-		this.id = id;
-		this.nom = nom;
-		this.prenom = prenom;
-		this.email = email;
-		this.relation = relation;
-		this.user = user;
-		this.disciplines = disciplines;
-	}
+	
 	public String getAdresse() {
 		return adresse;
 	}
@@ -134,8 +123,15 @@ public class membre_famille {
 	public void setLieu_naissance(String lieu_naissance) {
 		this.lieu_naissance = lieu_naissance;
 	}
+	
+	public List<Inscription> getInscriptions() {
+		return inscriptions;
+	}
+	public void setInscriptions(List<Inscription> inscriptions) {
+		this.inscriptions = inscriptions;
+	}
 	public membre_famille(Long id, String nom, String prenom, String email, String relation, String adresse,
-			Long telephone, Date date_naissance, String lieu_naissance, User user, List<Discipline> disciplines) {
+			Long telephone, Date date_naissance, String lieu_naissance, User user, List<Inscription> inscriptions) {
 		super();
 		this.id = id;
 		this.nom = nom;
@@ -147,7 +143,8 @@ public class membre_famille {
 		this.date_naissance = date_naissance;
 		this.lieu_naissance = lieu_naissance;
 		this.user = user;
-		this.disciplines = disciplines;
+		this.inscriptions = inscriptions;
 	}
+	
 	
 }

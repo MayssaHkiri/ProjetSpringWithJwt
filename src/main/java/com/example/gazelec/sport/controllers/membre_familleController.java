@@ -37,8 +37,7 @@ public class membre_familleController {
 	
 	@Autowired
 	private membre_familleService MembreService;
-	@Autowired
-	private UserRepository userRepo ;
+	
 	@Autowired
 	private UserService userService ;
 	

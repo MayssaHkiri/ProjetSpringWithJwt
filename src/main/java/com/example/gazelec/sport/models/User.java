@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,6 +21,8 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -28,6 +31,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	
 	private Long id;
 	@NotBlank
 	private String nom ;
@@ -48,6 +52,7 @@ public class User {
 	 private String profession;
 	 private String stegiste;
 	 private String matricule;
+	
 	 
 	
 	
@@ -61,9 +66,9 @@ public class User {
 	@JoinColumn(name="Id_Discipline", referencedColumnName="Id_Discipline")
 	private Discipline discipline;
 	
-	 @ManyToMany
-	 @JoinTable(name="inscription", joinColumns=  @JoinColumn(name="id"), inverseJoinColumns= @JoinColumn (name="id_discipline"))
-	 private List<Discipline> disciplines;
+	@JsonIgnore
+	@OneToMany (mappedBy="user")
+	private List<Inscription> inscriptions ;
    
 	 
 	public User() {
@@ -150,14 +155,7 @@ public class User {
 		this.matricule = matricule;
 	}
 
-	public List<Discipline> getDisciplines() {
-		return disciplines;
-	}
-
-	public void setDisciplines(List<Discipline> disciplines) {
-		this.disciplines = disciplines;
-	}
-
+	
 	public String getResetPasswordToken() {
 		return resetPasswordToken;
 	}
@@ -258,8 +256,44 @@ public class User {
 		this.resetPasswordToken = resetPasswordToken;
 		this.role = role;
 		this.discipline = discipline;
-		this.disciplines = disciplines;
+		
 	}
+
+	
+
+	public User(Long id, @NotBlank String nom, @NotBlank String prenom, @NotBlank @Email String email, String password,
+			String adresse, Long telephone, Date date_naissance, String lieu_naissance, String profession,
+			String stegiste, String matricule, MultipartFile image, String resetPasswordToken, Role role,
+			Discipline discipline, List<Discipline> disciplines) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.password = password;
+		this.adresse = adresse;
+		this.telephone = telephone;
+		this.date_naissance = date_naissance;
+		this.lieu_naissance = lieu_naissance;
+		this.profession = profession;
+		this.stegiste = stegiste;
+		this.matricule = matricule;
+		
+		this.resetPasswordToken = resetPasswordToken;
+		this.role = role;
+		this.discipline = discipline;
+	
+	}
+
+	public List<Inscription> getInscriptions() {
+		return inscriptions;
+	}
+
+	public void setInscriptions(List<Inscription> inscriptions) {
+		this.inscriptions = inscriptions;
+	}
+
+	
 
 	
 	
