@@ -98,8 +98,8 @@ public class InscriptionController {
 		InscriService.SupprimeInscriptionById(id);
 	}
 	
-	@GetMapping("/validation/{email}")
-    public boolean validerMembre(@PathVariable String email ,@RequestParam long id )  {
+	@GetMapping("/validation/{id}/{email}")
+    public boolean validerMembre(@PathVariable long id ,@PathVariable String email )  {
 	    boolean exist=true;
 	 Optional <User> user = userService.FindUserByMail(email);
         if (!user.isPresent()) {
@@ -108,11 +108,12 @@ public class InscriptionController {
         }
         else { Optional <Inscription> inscri = InscriRepo.findById(id) ;
         	Inscription ins =inscri.get();
+        	
         	ins.setStatus("accepte");
-        
+        	InscriRepo.save(ins);      
        User  userr = user.get();
        
-        // Send password reset email
+       
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setFrom("gazelecprojet@gmail.com");
         mail.setTo(userr.getEmail());
@@ -142,7 +143,7 @@ public class InscriptionController {
         mail.setFrom("gazelecprojet@gmail.com");
         mail.setTo(userr.getEmail());
         mail.setSubject("Validation d'inscription");
-        mail.setText("La matricule saisie est fausse , vous devez réessayer l'inscription : \n "  );
+        mail.setText("Demande d'inscription refusé , vous pouvez réessayer l'inscription : \n "  );
         System.out.println("Mail "+mail);
         javaMailSender.send(mail);
        
@@ -155,9 +156,46 @@ public class InscriptionController {
 	    }
 	   
 	    @GetMapping("/RechercheInscriptions/{recherche}")
-	    List<Object[]> UtilisateurEtDiscipline( @PathVariable String recherche  ){
+	    List<Object[]> RechercherInscription( @PathVariable String recherche  ){
 	        return InscriRepo.RechercheInscription(recherche);
 	   }
+	   
+	    @GetMapping("/ListeDesMembres")
+	    public List<Object[]> ListeDesMembres() {
+	        return InscriRepo.ListeDesmembres();
+	    }
+	   
+	    @GetMapping("/RechercherMembres/{recherche}")
+	    List<Object[]> RechercherMembres( @PathVariable String recherche  ){
+	        return InscriRepo.RechercherMembre(recherche);
+	   }
+	   
+	    @GetMapping("/EmailSuppression/{email}")
+	    public boolean SupprimerrMembre(@PathVariable String email )  {
+		    boolean exist=true;
+		    
+	       
+	       Optional <User> user = userService.FindUserByMail(email);
+	        if (!user.isPresent()) {
+	            System.out.println("Utilisateur n'existe pas");
+	            exist=false;
+	        }
+	        else {
+	        
+	       User  userr = user.get();
+	       
+	        // Send password reset email
+	        SimpleMailMessage mail = new SimpleMailMessage();
+	        mail.setFrom("gazelecprojet@gmail.com");
+	        mail.setTo(userr.getEmail());
+	        mail.setSubject("Iinscription dans la discipline sportif de la gazelec");
+	        mail.setText("Vous n'etes plus un membre dans l'équioe sportive de la gazelec  : \n "  );
+	        System.out.println("Mail "+mail);
+	        javaMailSender.send(mail);
+	       
+	        } 
+	        return exist;
+	    }
 	
 
 }
