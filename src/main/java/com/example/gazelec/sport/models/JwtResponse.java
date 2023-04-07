@@ -9,6 +9,7 @@ public class JwtResponse implements Serializable {
 	private String firstName;
 	private String lastName ; 
 	private String email;
+	private Discipline discipline ; 
 	private String role ; 
 
 /*	public JwtResponse(String accessToken, Long id, String firstName , String lastName , String email, String role  ) {
@@ -25,7 +26,7 @@ public class JwtResponse implements Serializable {
 		return token;
 	}
 
-	public JwtResponse(String token, Long id, String firstName, String lastName, String email, String role) {
+	/*public JwtResponse(String token, Long id, String firstName, String lastName, String email , String role) {
 	super();
 	this.token = token;
 	this.id = id;
@@ -33,8 +34,20 @@ public class JwtResponse implements Serializable {
 	this.lastName = lastName;
 	this.email = email;
 	this.role = role;
-}
+}*/
 
+
+	public JwtResponse(String token, Long id, String firstName, String lastName, String email,
+			Discipline discipline, String role) {
+		super();
+		this.token = token;
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.discipline = discipline;
+		this.role = role;
+	}
 
 	public void setAccessToken(String accessToken) {
 		this.token = accessToken;
@@ -86,6 +99,14 @@ public class JwtResponse implements Serializable {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public Discipline getDiscipline() {
+		return discipline;
+	}
+
+	public void setDiscipline(Discipline discipline) {
+		this.discipline = discipline;
 	}
 
 	
