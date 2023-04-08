@@ -3,6 +3,7 @@ package com.example.gazelec.sport.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.gazelec.sport.models.Entraîneur;
+import com.example.gazelec.sport.models.MessageResponse;
 import com.example.gazelec.sport.models.User;
 import com.example.gazelec.sport.respositories.EntraîneurRepository;
 import com.example.gazelec.sport.services.EntraîneurService;
@@ -28,9 +30,15 @@ public class EntraîneurController {
 	private EntraîneurRepository entraineurRepo ; 
 	
 	@PostMapping("/ajouter/{id}")
-	public Entraîneur ajouterEvénement (@RequestBody Entraîneur  E , @PathVariable  Long id  )
-	{
-		return EnterService.AjouterEntraîneur(E , id );
+	public  ResponseEntity<?>  ajouterEvénement (@RequestBody Entraîneur  E , @PathVariable  Long id  )
+	{   
+		if (entraineurRepo.existsByEmail(E.getEmail())) {
+			   return ResponseEntity.badRequest().body(new MessageResponse("Error : Email is already taken ! ")) ; 
+		   }
+		else {
+			EnterService.AjouterEntraîneur(E , id );
+			 return ResponseEntity.ok(new MessageResponse("Entraineur registered successfully!"));
+		}
 	}
 	@GetMapping("/Consulter")
 	public  List<Entraîneur> ListerUtilisateurs (){
