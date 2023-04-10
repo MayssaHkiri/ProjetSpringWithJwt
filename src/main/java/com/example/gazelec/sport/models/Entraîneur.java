@@ -15,9 +15,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="Entraîneur")
@@ -26,14 +30,23 @@ public class Entraîneur {
 	@Column(name="Id_Entraîneur")
 	@GeneratedValue(strategy = GenerationType.AUTO )
     private Long id ; 
+	@NotBlank
 	private String nom;
-	private String prénom;
+	@NotBlank
+	private String prenom;
+	@NotBlank
+	@Email
 	private String email;
-	private String téléphone;
+	@NotBlank 
+	private String adresse ; 
+	@NotBlank
+	private String telephone;
 	@JsonFormat(pattern = "yyyy-MM-dd")
+	
 	private Date naissance   ;
 	@JsonIgnore
 	@ManyToOne
+	 @JsonBackReference
 	@JoinColumn(name="Id_Discipline", referencedColumnName="Id_Discipline")
 	private Discipline discipline ;
 	public Long getId() {
@@ -48,25 +61,26 @@ public class Entraîneur {
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-	public String getPrénom() {
-		return prénom;
-	}
-	public void setPrénom(String prénom) {
-		this.prénom = prénom;
-	}
+	
 	public String getEmail() {
 		return email;
 	}
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getTéléphone() {
-		return téléphone;
-	}
-	public void setTéléphone(String téléphone) {
-		this.téléphone = téléphone;
-	}
 	
+	public String getPrenom() {
+		return prenom;
+	}
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
+	}
+	public String getTelephone() {
+		return telephone;
+	}
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
 	public Discipline getDiscipline() {
 		return discipline;
 	}
@@ -78,21 +92,41 @@ public class Entraîneur {
 	
 	
 	
-	public Entraîneur(String nom, String prénom, String email, String téléphone, Date naissance) {
+	
+	
+	public Entraîneur(@NotBlank String nom, @NotBlank String prenom, @NotBlank @Email String email,
+			@NotBlank String adresse, @NotBlank String telephone, Date naissance) {
 		super();
 		this.nom = nom;
-		this.prénom = prénom;
+		this.prenom = prenom;
 		this.email = email;
-		this.téléphone = téléphone;
+		this.adresse = adresse;
+		this.telephone = telephone;
 		this.naissance = naissance;
 	}
-	public Entraîneur(String nom, String prénom, String email, String téléphone, Date naissance,
-			Discipline discipline) {
+	public String getAdresse() {
+		return adresse;
+	}
+	public void setAdresse(String adresse) {
+		this.adresse = adresse;
+	}
+	public Entraîneur(Long id, @NotBlank String nom, @NotBlank String prenom, @NotBlank @Email String email,
+			@NotBlank String telephone, Date naissance) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.telephone = telephone;
+		this.naissance = naissance;
+	}
+	public Entraîneur(@NotBlank String nom, @NotBlank String prenom, @NotBlank @Email String email,
+			@NotBlank String telephone, Date naissance, Discipline discipline) {
 		super();
 		this.nom = nom;
-		this.prénom = prénom;
+		this.prenom = prenom;
 		this.email = email;
-		this.téléphone = téléphone;
+		this.telephone = telephone;
 		this.naissance = naissance;
 		this.discipline = discipline;
 	}

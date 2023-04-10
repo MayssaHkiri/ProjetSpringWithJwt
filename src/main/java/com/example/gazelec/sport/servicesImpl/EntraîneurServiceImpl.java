@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.example.gazelec.sport.models.Discipline;
 import com.example.gazelec.sport.models.Entraîneur;
 import com.example.gazelec.sport.models.Evénement;
+import com.example.gazelec.sport.models.User;
 import com.example.gazelec.sport.respositories.DisciplineRepository;
 import com.example.gazelec.sport.respositories.EntraîneurRepository;
 import com.example.gazelec.sport.services.EntraîneurService;
@@ -27,7 +28,7 @@ public class EntraîneurServiceImpl  implements EntraîneurService {
 	@Override
 	public Entraîneur AjouterEntraîneur(Entraîneur e , Long id ) {
 		
-		Entraîneur en = new Entraîneur  (e.getNom() , e.getPrénom() , e.getEmail() , e.getTéléphone() , e.getNaissance());
+		Entraîneur en = new Entraîneur  (e.getNom() , e.getPrenom(), e.getEmail() , e.getAdresse(),  e.getTelephone() , e.getNaissance());
 		Optional <Discipline> disciplineInfo =  DisciplineRepo.findById(id) ; 
 		if (disciplineInfo.isPresent()) 
 		{
@@ -61,10 +62,11 @@ public class EntraîneurServiceImpl  implements EntraîneurService {
 		if (entraineurInfo.isPresent()) {
 			Entraîneur e = entraineurInfo.get() ; 
 			e.setNom(En.getNom());
-			e.setPrénom(En.getPrénom()) ; 
+			e.setPrenom(En.getPrenom()) ; 
 			e.setEmail(En.getEmail());
-			e.setTéléphone(En.getTéléphone());
+			e.setTelephone(En.getTelephone());
 			e.setNaissance(En.getNaissance());
+			e.setAdresse(En.getAdresse());
 		Optional <Discipline> disciplineInfo = DisciplineRepo.findById(id) ; 
 		   if (disciplineInfo.isPresent()) {
 			   Discipline d = disciplineInfo.get() ; 
@@ -78,7 +80,19 @@ public class EntraîneurServiceImpl  implements EntraîneurService {
 			return null ; 
 		}
 	}
+
+	@Override
+	public List<Entraîneur> ListeEntraineurs() {
+		
+		return EntraîneurRepo.ListeEntraineursetDisciplines() ;
+	}
+
+	@Override
+	public List<Entraîneur> RechercherEntraineurs(String recherche) {
+		return EntraîneurRepo.RechercherEntraineurs(recherche) ; 
+	}
     
+	
 	
 
 }

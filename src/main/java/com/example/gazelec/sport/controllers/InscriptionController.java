@@ -164,6 +164,7 @@ public class InscriptionController {
 	    List<Object[]> RechercherInscription( @PathVariable String recherche  ){
 	        return InscriRepo.RechercheInscription(recherche);
 	   }
+<<<<<<< HEAD
 	   
 	    @GetMapping("/ListeDesMembres")
 	    public List<Object[]> ListeDesMembres() {
@@ -203,4 +204,22 @@ public class InscriptionController {
 	    }
 	
 
+=======
+	    // methode pour consulter les membres de la meme discipline que le moderateur connecté 
+	  @GetMapping ("/membres/{discipline}")
+	  List<Object[]> ConsulterMembresByModerateur (@PathVariable String discipline ) {
+		  return InscriRepo.ConsulterMembresByModerateur(discipline) ; 
+	  }
+     // methode pour rechercher les membres par le moderateur 
+	  @GetMapping ("/rechercheMembres/{critere}/{discipline}") 
+	  List<Object[]> RechercherByModerateur (@PathVariable String critere , @PathVariable String discipline ) {
+		  return InscriRepo.RechercheMembresParModerateur(critere, discipline) ; 
+	  }
+	  //liste d'inscription pour ajouter les disciplines dans le profil 
+	  @GetMapping("/users/{userId}/disciplines")
+	    public List<Discipline> getDisciplinesByUserId(@PathVariable Long userId) {
+	        return InscriRepo.findDisciplinesByUserId(userId);
+	    }
+	    
+>>>>>>> c10a4acb78d025ab5f2ac23523cbb8c92a331b97
 }

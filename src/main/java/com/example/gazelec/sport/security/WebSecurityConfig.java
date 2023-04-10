@@ -56,10 +56,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
 				.antMatchers("/api/auth/**").permitAll().antMatchers("/utilisateurs/**").permitAll().antMatchers("/api/events/**").permitAll()
-				.antMatchers("/disciplines/**").permitAll().antMatchers("/famille/**").permitAll().antMatchers("/api/auth/**").permitAll().antMatchers("/inscription/**").permitAll().anyRequest().authenticated();
+				.antMatchers("/disciplines/**").permitAll().antMatchers("/famille/**").permitAll().antMatchers("/api/auth/**").permitAll().antMatchers("/inscription/**").permitAll()
 				//.antMatchers(HttpMethod.POST,"/api/auth/addUser").hasRole("ADHERENT")
 				//.antMatchers(HttpMethod.GET,"/api/auth/ExistEmail/{email}").permitAll()
+<<<<<<< HEAD
 
+=======
+
+
+				.antMatchers("/api/auth/**").permitAll().antMatchers("/utilisateurs/**").permitAll().antMatchers("/api/**").permitAll()
+				.antMatchers("/disciplines/**").permitAll().antMatchers("/api/auth/**").permitAll().antMatchers("/entraineurs/**").permitAll().anyRequest().authenticated();
+				
+>>>>>>> c10a4acb78d025ab5f2ac23523cbb8c92a331b97
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
 }

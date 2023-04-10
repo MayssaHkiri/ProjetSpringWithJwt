@@ -17,9 +17,10 @@ public class UserDetailsImpl implements UserDetails {
 	private String firstName;
 	private String lastName ; 
 	private String password;
+	private Discipline discipline ; 
 	private GrantedAuthority authority;
 
-	public UserDetailsImpl(Long id, String email, String firstName , String lastName , String password,
+	/*public UserDetailsImpl(Long id, String email, String firstName , String lastName , String password,
 			GrantedAuthority authority) {
 		this.id = id;
 		this.email = email;
@@ -27,18 +28,36 @@ public class UserDetailsImpl implements UserDetails {
 		this.lastName = lastName ; 
 		this.password = password;
 		this.authority = authority;
-	}
-
+	}*/
+	
+     
 	
 	public static UserDetailsImpl build (User user ) {
 		GrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().getName().name()); 
-		return new UserDetailsImpl(user.getId(), user.getEmail(), user.getNom() , user.getPrenom(), user.getPassword(), authority ); 
+		return new UserDetailsImpl(user.getId(), user.getEmail(), user.getNom() , user.getPrenom(), user.getPassword(), user.getDiscipline(), authority ); 
+	}
+
+	public UserDetailsImpl(Long id, String email, String firstName, String lastName, String password,
+			Discipline discipline, GrantedAuthority authority) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.password = password;
+		this.discipline = discipline;
+		this.authority = authority;
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return Collections.singletonList(authority);
 	}
+    
+	public Discipline getDiscipline() {
+		return discipline;
+	}
+
 
 	public Long getId() {
 		return id;
