@@ -56,15 +56,20 @@ public class InscriptionController {
 	
 	
 	@PostMapping("/ajouter")
-	public Inscription ajouterMembre(@RequestBody Inscription i, @RequestParam long id ,  @RequestParam long idD) {
-		 User u =new User ();
-		 	
-		 	  Optional<User> optionalUser = utilRepo.findById(id);
+	public Inscription ajouterMembre(@RequestBody Inscription i, @RequestParam long id ,  @RequestParam long idD ,  @RequestParam String role) {
+		
+		if("adherent".equals(role))
+		{User u =new User ();
+		System.out.println("voula le role"+role);
+		 Optional<User> optionalUser = utilRepo.findById(id);
+		 System.out.println("voula l'id user"+id);
 			    if (optionalUser.isPresent()) { 
 			        User existingUser = optionalUser.get();
 			        i.setUser(existingUser);
-			        }
+			        System.out.println("voula l'id user"+existingUser.getNom());
+			        }}
 		 else {
+			 System.out.println("voula le role"+role);
 			 membre_famille mb= new membre_famille ();
 			  Optional<membre_famille> optionalMembre = MembreRepo.findById(id);
 			  if (optionalMembre.isPresent()) { 
