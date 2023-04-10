@@ -1,5 +1,6 @@
 package com.example.gazelec.sport.models;
 
+
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,7 +25,7 @@ public class Inscription {
 	private Long id_inscription;
 	
 	   @JsonFormat(pattern = "yyyy-MM-dd")
-	    private LocalDateTime date_inscription  ;
+	    private LocalDate date_inscription  ;
 		private String mode_paiement;
 		private String status;
 		
@@ -102,19 +103,6 @@ public class Inscription {
 			this.membre_famille = membre_famille;
 		}
 
-
-		public LocalDateTime getDate_inscription() {
-			return date_inscription;
-		}
-
-
-		public void setDate_inscription(LocalDateTime localDateTime) {
-			this.date_inscription = localDateTime;
-		}
-
-
-		
-
 		public String getStatus() {
 			return status;
 		}
@@ -125,7 +113,17 @@ public class Inscription {
 		}
 
 
-		public Inscription(Long id_inscription, LocalDateTime date_inscription, String mode_paiement, String status,
+		public LocalDate getDate_inscription() {
+			return date_inscription;
+		}
+
+
+		public void setDate_inscription(LocalDate localDate) {
+			this.date_inscription = localDate;
+		}
+
+
+		public Inscription(Long id_inscription, LocalDate date_inscription, String mode_paiement, String status,
 				Discipline discipline, User user, com.example.gazelec.sport.models.membre_famille membre_famille) {
 			super();
 			this.id_inscription = id_inscription;
@@ -137,9 +135,6 @@ public class Inscription {
 			this.membre_famille = membre_famille;
 		}
 
-
-	
-		
 		
 
 		

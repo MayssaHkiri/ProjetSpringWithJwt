@@ -1,5 +1,6 @@
 package com.example.gazelec.sport.controllers;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -84,7 +85,7 @@ public class InscriptionController {
 		
 			
 			i.setDiscipline(d);
-			i.setDate_inscription(LocalDateTime.now());
+			i.setDate_inscription(LocalDate.now());
 			i.setStatus("en attente");
 	    return InscriService.AjouterInscription(i);
 	}
