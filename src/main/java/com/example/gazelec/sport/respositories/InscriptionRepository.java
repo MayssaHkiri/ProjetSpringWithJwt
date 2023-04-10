@@ -93,7 +93,7 @@ public interface InscriptionRepository extends JpaRepository < Inscription  , Lo
 			+ "WHERE (m.nom LIKE %:recherche% OR m.prenom LIKE %:recherche% OR u.nom LIKE %:recherche% OR u.prenom LIKE %:recherche% OR u.email LIKE %:recherche% OR m.email LIKE %:recherche% OR u.stegiste LIKE %:recherche% OR mf.nom LIKE %:recherche% OR discipline LIKE %:recherche%)and (i.status='en attente')"
 			+ "ORDER BY i.date_inscription DESC ",nativeQuery = true)
 	List<Object[]> RechercheInscription(@Param(value = "recherche") String recherche);
-<<<<<<< HEAD
+
 	
 	@Query(value = "SELECT \r\n"
 			+ "  i.id_inscription AS id_inscription,\r\n"
@@ -213,7 +213,7 @@ public interface InscriptionRepository extends JpaRepository < Inscription  , Lo
 			+ "ORDER BY i.date_inscription DESC "
 			,nativeQuery = true)
 	List<Object[]> RechercherMembre(@Param(value = "recherche") String recherche);
-=======
+
    
 	
 	
@@ -221,7 +221,7 @@ public interface InscriptionRepository extends JpaRepository < Inscription  , Lo
 	
 	
 	@Query(value = "SELECT \r\n"
->>>>>>> c10a4acb78d025ab5f2ac23523cbb8c92a331b97
+
 
 	+ " i.id_inscription AS id_inscription,\r\n"
 
