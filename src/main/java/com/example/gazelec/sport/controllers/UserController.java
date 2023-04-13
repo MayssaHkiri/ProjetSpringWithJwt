@@ -99,11 +99,11 @@ public class UserController {
 	        else {
 	        
 	       User  userr = user.get();
-	       userr.setResetPasswordToken(token);
+	      userr.setResetPasswordToken(token);
 	        utilRepo.save(userr);
 	        System.out.println("Utilisateur "+userr.getEmail()); 
 	        
-	        String Url = "http://localhost:4200/resetPassword?token=" + token;
+	        String Url = "http://localhost:4200/resetPassword?token=" + email;
 	        // Send password reset email
 	        SimpleMailMessage mail = new SimpleMailMessage();
 	        mail.setFrom("gazelecprojet@gmail.com");
