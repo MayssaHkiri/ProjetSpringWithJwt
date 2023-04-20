@@ -76,13 +76,15 @@ public class UserController {
 	     List<User> ListeParRole( @PathVariable String role){
 	        return userService.ListeParRole(role);
 	   }
-	  @GetMapping("/RechercherUtilisateur/{role}/{critere}")
+	  @GetMapping("/RechercherAdherent/{role}/{critere}")
 	     List<User> ChercherUtilisateur( @PathVariable String role ,@PathVariable String critere ){
-	        return userService.RechercherUtilisateur(role ,critere );
+	        return userService.RechercherAdherent(role ,critere );
 	   }
-	  @GetMapping("/ListeAvecDisciplines/{role}")
-	     List<User> UtilisateurEtDiscipline( @PathVariable String role  ){
-	        return userService.UtilisateursEtDiscipline(role);
+	  
+	  
+	  @GetMapping("/ListeAvecDisciplines")
+	     List<User> UtilisateurEtDiscipline(  ){
+	        return userService.UtilisateursEtDiscipline();
 	   }
 	  
 	  
