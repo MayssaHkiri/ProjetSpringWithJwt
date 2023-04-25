@@ -306,7 +306,7 @@ public interface InscriptionRepository extends JpaRepository < Inscription  , Lo
 
 	+ "JOIN discipline d ON i.id_discipline = d.id_discipline \r\n"
 
-	+ "WHERE (discipline =:disModerateur) and (i.status='en attente')"
+	+ "WHERE (discipline =:disModerateur) and (i.status='accepte')"
 
 	+ "ORDER BY i.date_inscription DESC ",nativeQuery = true)
 
@@ -398,7 +398,7 @@ public interface InscriptionRepository extends JpaRepository < Inscription  , Lo
 
 	+ "JOIN discipline d ON i.id_discipline = d.id_discipline \r\n"
 
-	+ "WHERE (m.nom LIKE %:recherche% OR m.prenom LIKE %:recherche% OR u.nom LIKE %:recherche% OR u.prenom LIKE %:recherche% OR u.email LIKE %:recherche% OR m.email LIKE %:recherche% OR mf.nom LIKE %:recherche%)and (i.status='en attente') and (discipline =:disModerateur) "
+	+ "WHERE (m.nom LIKE %:recherche% OR m.prenom LIKE %:recherche% OR u.nom LIKE %:recherche% OR u.prenom LIKE %:recherche% OR u.email LIKE %:recherche% OR m.email LIKE %:recherche% OR mf.nom LIKE %:recherche%)and (i.status='accepte') and (discipline =:disModerateur) "
 
 	+ "ORDER BY i.date_inscription DESC ",nativeQuery = true)
 

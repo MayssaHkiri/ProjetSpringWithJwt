@@ -57,7 +57,7 @@ public class EntraîneurServiceImpl  implements EntraîneurService {
 	}
 
 	@Override
-	public Entraîneur ModifierEntraîneur(Entraîneur En , Long id ) {
+	public Entraîneur ModifierEntraîneur(Entraîneur En ) {
 		Optional <Entraîneur> entraineurInfo = EntraîneurRepo.findById(En.getId()) ; 
 		if (entraineurInfo.isPresent()) {
 			Entraîneur e = entraineurInfo.get() ; 
@@ -67,11 +67,11 @@ public class EntraîneurServiceImpl  implements EntraîneurService {
 			e.setTelephone(En.getTelephone());
 			e.setNaissance(En.getNaissance());
 			e.setAdresse(En.getAdresse());
-		Optional <Discipline> disciplineInfo = DisciplineRepo.findById(id) ; 
+		/*Optional <Discipline> disciplineInfo = DisciplineRepo.findById(id) ; 
 		   if (disciplineInfo.isPresent()) {
 			   Discipline d = disciplineInfo.get() ; 
 			   e.setDiscipline(d);
-		   }
+		   }*/
 		   
 		  return  EntraîneurRepo.save(e) ; 
 		   

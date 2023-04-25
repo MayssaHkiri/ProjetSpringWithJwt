@@ -1,5 +1,7 @@
 package com.example.gazelec.sport.controllers;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +32,19 @@ public class EntraîneurController {
 	private EntraîneurRepository entraineurRepo ; 
 	
 	@PostMapping("/ajouter/{id}")
-	public  ResponseEntity<?>  ajouterEvénement (@RequestBody Entraîneur  E , @PathVariable  Long id  )
+	public  ResponseEntity<?>  ajouterEntraineur (@RequestBody Entraîneur  E , @PathVariable  Long id  )
 	{   
 		if (entraineurRepo.existsByEmail(E.getEmail())) {
 			   return ResponseEntity.badRequest().body(new MessageResponse("Error : Email is already taken ! ")) ; 
 		   }
 		else {
+			
+			/*    LocalDate dateEmbaucheLocalDate = E.getDateEmbauche();
+			    LocalDate now = LocalDate.now();
+			    int exp =  Period.between(dateEmbaucheLocalDate, now).getYears();
+			    E.setExperience(exp); 
+			    System.out.println(exp); 
+			    System.out.println(E.getDateEmbauche()) ; */
 			EnterService.AjouterEntraîneur(E , id );
 			 return ResponseEntity.ok(new MessageResponse("Entraineur registered successfully!"));
 		}
@@ -52,10 +61,10 @@ public class EntraîneurController {
 	public Entraîneur ConsulterUtilisateur ( @PathVariable Long id) {
 		return EnterService.ConsulterEntraîneurById(id);
 	}
-	@PutMapping ("Modifier/{id}")
-	public Entraîneur ModifierUtilisateur (@RequestBody Entraîneur En , @PathVariable Long id  )
+	@PutMapping ("Modifier")
+	public Entraîneur ModifierUtilisateur (@RequestBody Entraîneur En )
 	{
-		return EnterService.ModifierEntraîneur(En , id );
+		return EnterService.ModifierEntraîneur(En );
 	}
 	@DeleteMapping ("/{id}")
 	public void SupprimerUtilisateur (@PathVariable Long id )
