@@ -59,15 +59,15 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> RechercherUtilisateur(String RoleNom ,String recherche  ) {
+	public List<User> RechercherAdherent(String RoleNom ,String recherche ) {
 		
-		return utilRepo.RechercherUtilisateur(RoleNom ,recherche);
+		return utilRepo.RechercherAdherent(RoleNom ,recherche);
 	}
 
 	@Override
-	public List<User> UtilisateursEtDiscipline(String RoleNom) {
+	public List<User> UtilisateursEtDiscipline() {
 		
-		return utilRepo.ListeUtilisateursetDisciplines(RoleNom);
+		return utilRepo.ListeUtilisateursetDisciplines();
 	}
 
 	@Override
@@ -84,6 +84,8 @@ public class UserServiceImpl implements UserService {
 		
 		return utilRepo.findByResetToken(token);
 	}
+
+	
 	
 
 }

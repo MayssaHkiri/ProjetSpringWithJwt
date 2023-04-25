@@ -1,7 +1,7 @@
 package com.example.gazelec.sport.controllers;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import java.util.List;
@@ -60,7 +60,7 @@ public class InscriptionController {
 	public Inscription ajouterMembre(@RequestBody Inscription i, @RequestParam long id ,  @RequestParam long idD ,  @RequestParam String role) {
 		
 		if("adherent".equals(role))
-		{User u =new User ();
+		{
 		System.out.println("voula le role"+role);
 		 Optional<User> optionalUser = utilRepo.findById(id);
 		 System.out.println("voula l'id user"+id);
@@ -71,7 +71,7 @@ public class InscriptionController {
 			        }}
 		 else {
 			 System.out.println("voula le role"+role);
-			 membre_famille mb= new membre_famille ();
+			
 			  Optional<membre_famille> optionalMembre = MembreRepo.findById(id);
 			  if (optionalMembre.isPresent()) { 
 			        membre_famille existingMembre = optionalMembre.get();
@@ -130,8 +130,8 @@ public class InscriptionController {
        
         }   return exist;
     }
-	@GetMapping("/refus/{email}")
-    public boolean RefuserMembre(@PathVariable String email )  {
+	@GetMapping("/refus/{id}/{email}")
+    public boolean RefuserMembre(@PathVariable long id ,@PathVariable String email )  {
 	    boolean exist=true;
 	    
        
@@ -141,7 +141,11 @@ public class InscriptionController {
             exist=false;
         }
         else {
-        
+        	Optional <Inscription> inscri = InscriRepo.findById(id) ;
+        	Inscription ins =inscri.get();
+        	
+        	ins.setStatus("refuse");
+        	InscriRepo.save(ins);
        User  userr = user.get();
        
         // Send password reset email

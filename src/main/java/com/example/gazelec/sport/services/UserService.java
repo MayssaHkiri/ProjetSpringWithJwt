@@ -13,9 +13,11 @@ public interface UserService {
 	public void SupprimeUtilById (Long id); 
 	public  User ModifierUtilisateur (  User U  ); 
 	public List< User>ListeParRole (String RoleNom);
-	public List< User>RechercherUtilisateur (String RoleNom ,String recherche);
-	public List< User>UtilisateursEtDiscipline (String RoleNom);
+	
+	
+	public List< User>UtilisateursEtDiscipline ();
 	public Optional<User>FindUserByMail (String email);
 	public Optional<User>FindUserByToken (String token);
+	List<User> RechercherAdherent(String RoleNom, String recherche);
 	
 }

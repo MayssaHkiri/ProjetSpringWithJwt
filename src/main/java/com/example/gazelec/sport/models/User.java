@@ -52,10 +52,6 @@ public class User {
 	 private String profession;
 	 private String stegiste;
 	 private String matricule;
-	
-	 
-	
-	
 	private String resetPasswordToken;
 	
 	@ManyToOne
