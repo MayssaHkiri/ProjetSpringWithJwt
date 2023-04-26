@@ -28,7 +28,7 @@ public class EntraîneurServiceImpl  implements EntraîneurService {
 	@Override
 	public Entraîneur AjouterEntraîneur(Entraîneur e , Long id ) {
 		
-		Entraîneur en = new Entraîneur  (e.getNom() , e.getPrenom(), e.getEmail() , e.getAdresse(),  e.getTelephone() , e.getNaissance());
+		Entraîneur en = new Entraîneur  (e.getNom() , e.getPrenom(), e.getEmail() , e.getAdresse(),  e.getTelephone() , e.getNaissance(), e.getDateEmbauche());
 		Optional <Discipline> disciplineInfo =  DisciplineRepo.findById(id) ; 
 		if (disciplineInfo.isPresent()) 
 		{
@@ -57,7 +57,7 @@ public class EntraîneurServiceImpl  implements EntraîneurService {
 	}
 
 	@Override
-	public Entraîneur ModifierEntraîneur(Entraîneur En , Long id ) {
+	public Entraîneur ModifierEntraîneur(Entraîneur En ) {
 		Optional <Entraîneur> entraineurInfo = EntraîneurRepo.findById(En.getId()) ; 
 		if (entraineurInfo.isPresent()) {
 			Entraîneur e = entraineurInfo.get() ; 
@@ -67,11 +67,12 @@ public class EntraîneurServiceImpl  implements EntraîneurService {
 			e.setTelephone(En.getTelephone());
 			e.setNaissance(En.getNaissance());
 			e.setAdresse(En.getAdresse());
-		Optional <Discipline> disciplineInfo = DisciplineRepo.findById(id) ; 
+			e.setDateEmbauche(En.getDateEmbauche());
+		/*Optional <Discipline> disciplineInfo = DisciplineRepo.findById(id) ; 
 		   if (disciplineInfo.isPresent()) {
 			   Discipline d = disciplineInfo.get() ; 
 			   e.setDiscipline(d);
-		   }
+		   }*/
 		   
 		  return  EntraîneurRepo.save(e) ; 
 		   
@@ -82,14 +83,14 @@ public class EntraîneurServiceImpl  implements EntraîneurService {
 	}
 
 	@Override
-	public List<Entraîneur> ListeEntraineurs() {
+	public List<Entraîneur> ListeEntraineurs(String discipline ) {
 		
-		return EntraîneurRepo.ListeEntraineursetDisciplines() ;
+		return EntraîneurRepo.ListeEntraineursetDisciplines(discipline) ;
 	}
 
 	@Override
-	public List<Entraîneur> RechercherEntraineurs(String recherche) {
-		return EntraîneurRepo.RechercherEntraineurs(recherche) ; 
+	public List<Entraîneur> RechercherEntraineurs(String recherche , String discipline ) {
+		return EntraîneurRepo.RechercherEntraineurs(recherche , discipline ) ; 
 	}
     
 	

@@ -10,7 +10,7 @@ public interface EntraîneurService {
 	public List<Entraîneur> ConsulterEntraîneurs () ; 
 	public Entraîneur ConsulterEntraîneurById (Long id); 
 	public void SupprimeEntraîneurById (Long id); 
-	public Entraîneur ModifierEntraîneur (Entraîneur En , Long id  ); 
-	public List<Entraîneur> ListeEntraineurs(); 
-	public List<Entraîneur> RechercherEntraineurs (String recherche ) ;
+	public Entraîneur ModifierEntraîneur (Entraîneur En  ); 
+	public List<Entraîneur> ListeEntraineurs(String discipline ); 
+	public List<Entraîneur> RechercherEntraineurs (String recherche  , String discipline ) ;
 }
