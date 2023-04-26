@@ -39,12 +39,6 @@ public class EntraîneurController {
 		   }
 		else {
 			
-			/*    LocalDate dateEmbaucheLocalDate = E.getDateEmbauche();
-			    LocalDate now = LocalDate.now();
-			    int exp =  Period.between(dateEmbaucheLocalDate, now).getYears();
-			    E.setExperience(exp); 
-			    System.out.println(exp); 
-			    System.out.println(E.getDateEmbauche()) ; */
 			EnterService.AjouterEntraîneur(E , id );
 			 return ResponseEntity.ok(new MessageResponse("Entraineur registered successfully!"));
 		}
@@ -53,9 +47,9 @@ public class EntraîneurController {
 	public  List<Entraîneur> ListerUtilisateurs (){
 		return EnterService.ConsulterEntraîneurs();
 	}
-	@GetMapping("/consultation")
-	 public List<Entraîneur> ListeEntraineursetDisciplines(){
-		return EnterService.ConsulterEntraîneurs() ; 
+	@GetMapping("/consultation/{discipline}")
+	 public List<Entraîneur> ListeEntraineursetDisciplines(@PathVariable String discipline ){
+		return EnterService.ListeEntraineurs(discipline); 
 	}
 	@GetMapping ("/{id}")
 	public Entraîneur ConsulterUtilisateur ( @PathVariable Long id) {
@@ -80,9 +74,9 @@ public class EntraîneurController {
 		    
 		    return exist;
 	   }
-	@GetMapping("/rechercher/{critere}")
-	public List<Entraîneur> RechercherEntraineurs (@PathVariable String  critere  ) {
-		 return EnterService.RechercherEntraineurs(critere) ; 
+	@GetMapping("/rechercher/{critere}/{discipline}")
+	public List<Entraîneur> RechercherEntraineurs (@PathVariable String  critere , @PathVariable String discipline   ) {
+		 return EnterService.RechercherEntraineurs(critere , discipline ) ; 
 	}
 
 }

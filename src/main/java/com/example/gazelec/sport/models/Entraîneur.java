@@ -51,11 +51,10 @@ public class Entraîneur {
 	private Date naissance   ;
 	
 
-    @Column(name = "date_embauche")
 	@JsonFormat(pattern = "yyyy-MM-dd")
-	private LocalDate dateEmbauche;
+	private Date dateEmbauche;
 
-	private int experience;
+	
 	@JsonIgnore
 	@ManyToOne
 	 @JsonBackReference
@@ -104,7 +103,7 @@ public class Entraîneur {
 	
 	
 	public Entraîneur(@NotBlank String nom, @NotBlank String prenom, @NotBlank @Email String email,
-			@NotBlank String adresse, @NotBlank String telephone, Date naissance) {
+			@NotBlank String adresse, @NotBlank String telephone, Date naissance , Date dateEmbauche   ) {
 		super();
 		this.nom = nom;
 		this.prenom = prenom;
@@ -112,6 +111,8 @@ public class Entraîneur {
 		this.adresse = adresse;
 		this.telephone = telephone;
 		this.naissance = naissance;
+		this.dateEmbauche = dateEmbauche ; 
+		
 	}
 	public String getAdresse() {
 		return adresse;
@@ -119,26 +120,10 @@ public class Entraîneur {
 	public void setAdresse(String adresse) {
 		this.adresse = adresse;
 	}
-	public Entraîneur(Long id, @NotBlank String nom, @NotBlank String prenom, @NotBlank @Email String email,
-			@NotBlank String telephone, Date naissance) {
-		super();
-		this.id = id;
-		this.nom = nom;
-		this.prenom = prenom;
-		this.email = email;
-		this.telephone = telephone;
-		this.naissance = naissance;
-	}
-	public Entraîneur(@NotBlank String nom, @NotBlank String prenom, @NotBlank @Email String email,
-			@NotBlank String telephone, Date naissance, Discipline discipline) {
-		super();
-		this.nom = nom;
-		this.prenom = prenom;
-		this.email = email;
-		this.telephone = telephone;
-		this.naissance = naissance;
-		this.discipline = discipline;
-	}
+	
+	
+	
+
 	public Date getNaissance() {
 		return naissance;
 	}
@@ -151,17 +136,13 @@ public class Entraîneur {
 		
 	}
 
-	public LocalDate getDateEmbauche() {
+	
+	public Date getDateEmbauche() {
 		return dateEmbauche;
 	}
-	public void setDateEmbauche(LocalDate dateEmbauche) {
+	public void setDateEmbauche(Date dateEmbauche) {
 		this.dateEmbauche = dateEmbauche;
 	}
-	public int getExperience() {
-		return experience;
-	}
-	public void setExperience(int experience) {
-		this.experience = experience;
-	}
+	
 
 }
