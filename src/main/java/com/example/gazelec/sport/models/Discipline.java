@@ -30,6 +30,9 @@ public class Discipline {
 	@JsonIgnore
 	@OneToMany (mappedBy="discipline")
 	private List<User> utilisateurs ;
+	@JsonIgnore
+	@OneToMany (mappedBy="discipline")
+	private List<Terrain> terrains ;
 	
 	@JsonIgnore
 	@OneToMany (mappedBy="discipline")
