@@ -18,14 +18,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	 Optional<User> findByResetToken(@Param(value = "token") String token);
 	
 	
-	@Query(value = "SELECT * FROM utilisateur u INNER JOIN roles r ON u.id_role = r.id_role WHERE r.name = :roleNom",nativeQuery = true)
+	@Query(value = "SELECT u.*,r.name FROM utilisateur u INNER JOIN roles r ON u.id_role = r.id_role WHERE r.name = :roleNom",nativeQuery = true)
     public List<User> ListByRole(@Param(value = "roleNom") String role);
 	
 	@Query(value = "SELECT * FROM utilisateur u INNER JOIN roles r ON u.ID_ROLE = r.ID_ROLE WHERE r.name = :roleNom and (u.nom LIKE %:recherche% OR u.prenom LIKE %:recherche% OR u.email LIKE %:recherche% ) ",nativeQuery = true)
 
 	public List<User> RechercherAdherent(@Param(value = "roleNom") String role ,@Param(value = "recherche") String critere);
 	
-	@Query(value = "SELECT * FROM utilisateur u  INNER JOIN roles r ON u.ID_ROLE = r.ID_ROLE   WHERE (r.name = 'GESTIONNAIRE') OR (r.name='MODERATEUR')",nativeQuery = true)
+	@Query(value = "SELECT u.* ,r.name FROM utilisateur u  INNER JOIN roles r ON u.ID_ROLE = r.ID_ROLE   WHERE (r.name = 'GESTIONNAIRE') OR (r.name='MODERATEUR')",nativeQuery = true)
     public List<User> ListeUtilisateursetDisciplines();
 	
 

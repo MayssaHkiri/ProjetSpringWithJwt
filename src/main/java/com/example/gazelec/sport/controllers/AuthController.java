@@ -141,7 +141,7 @@ public class AuthController {
 	        existingUser.setLieu_naissance(user.getLieu_naissance());
 	        existingUser.setProfession(user.getProfession());
 	        existingUser.setMatricule(user.getMatricule());
-	        existingUser.setStegiste(user.getStegiste());
+	        existingUser.setType(user.getType());
 	        
 	        // Autres champs que vous souhaitez mettre à jour
 

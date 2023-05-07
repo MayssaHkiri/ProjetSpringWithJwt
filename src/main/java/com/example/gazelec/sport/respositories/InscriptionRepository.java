@@ -197,12 +197,25 @@ public interface InscriptionRepository extends JpaRepository < Inscription  , Lo
 			+ "    ELSE mf.stegiste \r\n"
 			+ "  END AS stegiste,\r\n"
 			+ "  CASE \r\n"
+			+ "    WHEN i.id_user IS NOT NULL THEN u.nom \r\n"
+			+ "    ELSE mf.nom \r\n"
+			+ "  END AS nomAdherent,\r\n"
+			+ "  CASE \r\n"
+			+ "    WHEN i.id_user IS NOT NULL THEN u.prenom \r\n"
+			+ "    ELSE mf.prenom \r\n"
+			+ "  END AS prenomAdherent,\r\n"
+			+ "  CASE \r\n"
+			+ "    WHEN i.id_user IS NOT NULL THEN u.profession \r\n"
+			+ "    ELSE mf.profession \r\n"
+			+ "  END AS profession,\r\n"
+			+ "  CASE \r\n"
 			+ "    WHEN i.id_user IS NOT NULL THEN u.matricule \r\n"
 			+ "    ELSE mf.matricule \r\n"
 			+ "  END AS matricule,\r\n"
 			+ "  i.date_inscription,\r\n"
 			+ "  i.mode_paiement,\r\n"
 			+ "  m.id_membre_famille AS id_membre_famille,\r\n"
+			+ "  m.relation AS relation,\r\n"
 			+ "  d.discipline AS discipline\r\n"
 			+ "FROM inscription i\r\n"
 			+ "LEFT JOIN utilisateur u ON i.id_user = u.id\r\n"
@@ -214,7 +227,7 @@ public interface InscriptionRepository extends JpaRepository < Inscription  , Lo
 			,nativeQuery = true)
 	List<Object[]> RechercherMembre(@Param(value = "recherche") String recherche);
 
-   
+	
 	
 	
 	
