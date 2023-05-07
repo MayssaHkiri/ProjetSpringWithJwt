@@ -185,6 +185,7 @@ public class EvénementController {
 	        	ev.setDate(event.getDate()); 
 	        	ev.setDescription(event.getDescription()); 
 	        	ev.setLieu(event.getLieu()); 
+	        	ev.setNb_consultation(event.getNb_consultation());
 	        	 return repository.save(ev) ; 
 		 }
 		 return null ; 

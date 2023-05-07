@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
@@ -27,7 +29,13 @@ public class Evénement {
 		private Date date  ;
 	 @NotBlank
 	 private String description;
+	 @Value("${nb_consultation:0}")
+	 private Long nb_consultation;
+	 
 	
+	public void setNb_consultation(Long nb_consultation) {
+		this.nb_consultation = nb_consultation;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -91,6 +99,21 @@ public class Evénement {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	public Evénement(Long id, @NotBlank String titre, @NotBlank String lieu, String fileName, Date date,
+			@NotBlank String description, Long nb_consultation) {
+		super();
+		this.id = id;
+		this.titre = titre;
+		this.lieu = lieu;
+		this.fileName = fileName;
+		this.date = date;
+		this.description = description;
+		this.nb_consultation = nb_consultation;
+	}
+	public Long getNb_consultation() {
+		return nb_consultation;
+	}
+	
 	 
 	 
 }

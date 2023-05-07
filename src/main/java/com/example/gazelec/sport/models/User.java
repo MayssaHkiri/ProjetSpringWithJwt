@@ -50,7 +50,7 @@ public class User {
 	private Date date_naissance  ;
     private String lieu_naissance;
 	 private String profession;
-	 private String stegiste;
+	 private String type;
 	 private String matricule;
 	private String resetPasswordToken;
 	
@@ -135,14 +135,7 @@ public class User {
 		this.profession = profession;
 	}
 
-	public String getStegiste() {
-		return stegiste;
-	}
-
-	public void setStegiste(String stegiste) {
-		this.stegiste = stegiste;
-	}
-
+	
 	public String getMatricule() {
 		return matricule;
 	}
@@ -234,7 +227,7 @@ public class User {
 
 	public User(Long id, @NotBlank String nom, @NotBlank String prenom, @NotBlank @Email String email, String password,
 			String adresse, Long telephone, Date date_naissance, String lieu_naissance, String profession,
-			String stegiste, String matricule, String resetPasswordToken, Role role, Discipline discipline,
+			String type, String matricule, String resetPasswordToken, Role role, Discipline discipline,
 			List<Discipline> disciplines) {
 		super();
 		this.id = id;
@@ -247,7 +240,7 @@ public class User {
 		this.date_naissance = date_naissance;
 		this.lieu_naissance = lieu_naissance;
 		this.profession = profession;
-		this.stegiste = stegiste;
+		this.type = type;
 		this.matricule = matricule;
 		this.resetPasswordToken = resetPasswordToken;
 		this.role = role;
@@ -259,7 +252,7 @@ public class User {
 
 	public User(Long id, @NotBlank String nom, @NotBlank String prenom, @NotBlank @Email String email, String password,
 			String adresse, Long telephone, Date date_naissance, String lieu_naissance, String profession,
-			String stegiste, String matricule, MultipartFile image, String resetPasswordToken, Role role,
+			String type, String matricule, MultipartFile image, String resetPasswordToken, Role role,
 			Discipline discipline, List<Discipline> disciplines) {
 		super();
 		this.id = id;
@@ -272,7 +265,7 @@ public class User {
 		this.date_naissance = date_naissance;
 		this.lieu_naissance = lieu_naissance;
 		this.profession = profession;
-		this.stegiste = stegiste;
+		this.type = type;
 		this.matricule = matricule;
 		
 		this.resetPasswordToken = resetPasswordToken;
@@ -287,6 +280,14 @@ public class User {
 
 	public void setInscriptions(List<Inscription> inscriptions) {
 		this.inscriptions = inscriptions;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	
