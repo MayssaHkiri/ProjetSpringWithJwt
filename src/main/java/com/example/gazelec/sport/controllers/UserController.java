@@ -105,7 +105,7 @@ public class UserController {
 	        utilRepo.save(userr);
 	        System.out.println("Utilisateur "+userr.getEmail()); 
 	        
-	        String Url = "http://localhost:4200/resetPassword?token=" + email;
+	        String Url = "http://localhost:4200/resetPassword?token=" + token ; 
 	        // Send password reset email
 	        SimpleMailMessage mail = new SimpleMailMessage();
 	        mail.setFrom("gazelecprojet@gmail.com");
