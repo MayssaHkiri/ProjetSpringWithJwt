@@ -103,7 +103,9 @@ public class ReservationController {
 	        return Collections.emptyList();
 	    }
 	}*/
-	@GetMapping("/horaires/{dateString}")
+	// la fonction getReservationByDate version 1  
+	
+	/*@GetMapping("/horaires/{dateString}")
 	public List<String[]> getReservationsByDate(@PathVariable String dateString ) {
 		
 		
@@ -127,7 +129,32 @@ public class ReservationController {
 		    return Collections.emptyList();
 		}
  
+	}*/
+	
+	@GetMapping("/horaires/{dateString}/{terrainId}")
+	public List<String[]> getReservationsByDateAndTerrain(@PathVariable String dateString, @PathVariable Long terrainId) {
+
+	    try {
+	        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	        Date date = new Date(sdf.parse(dateString).getTime());
+	        Optional<List<Reservation>> reservations = reservationRepo.findByDateAndTerrain(date, terrainId);
+	        if (reservations.isPresent()) {
+	            List<Reservation> reservationsList = reservations.get();
+	            List<String[]> horaires = new ArrayList<>();
+	            for (Reservation reservation : reservationsList) {
+	                horaires.add(new String[] { reservation.getHdebut(), reservation.getHfin() });
+	            }
+	            return horaires;
+	        } else {
+	            return Collections.emptyList();
+	        }
+	    } catch (ParseException e) {
+	        // Gérer l'erreur de la conversion de la chaîne de caractères en objet Date
+	        return Collections.emptyList();
+	    }
+
 	}
+
 
 	 @GetMapping("/consultation/{userId}")
 	    public ResponseEntity<List<Reservation>> getAllReservationsByUserId(@PathVariable("userId") Long userId) {
