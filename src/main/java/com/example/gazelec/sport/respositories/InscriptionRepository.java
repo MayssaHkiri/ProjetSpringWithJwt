@@ -33,9 +33,9 @@ public interface InscriptionRepository extends JpaRepository < Inscription  , Lo
 			+ "    ELSE m.date_naissance \r\n"
 			+ "  END AS date_naissance,\r\n"
 			+ "  CASE \r\n"
-			+ "    WHEN i.id_user IS NOT NULL THEN u.stegiste \r\n"
-			+ "    ELSE mf.stegiste \r\n"
-			+ "  END AS stegiste,\r\n"
+			+ "    WHEN i.id_user IS NOT NULL THEN u.type \r\n"
+			+ "    ELSE mf.type \r\n"
+			+ "  END AS type,\r\n"
 			+ "  CASE \r\n"
 			+ "    WHEN i.id_user IS NOT NULL THEN u.matricule \r\n"
 			+ "    ELSE mf.matricule \r\n"
@@ -74,9 +74,9 @@ public interface InscriptionRepository extends JpaRepository < Inscription  , Lo
 			+ "    ELSE m.date_naissance \r\n"
 			+ "  END AS date_naissance,\r\n"
 			+ "  CASE \r\n"
-			+ "    WHEN i.id_user IS NOT NULL THEN u.stegiste \r\n"
-			+ "    ELSE mf.stegiste \r\n"
-			+ "  END AS stegiste,\r\n"
+			+ "    WHEN i.id_user IS NOT NULL THEN u.type \r\n"
+			+ "    ELSE mf.type \r\n"
+			+ "  END AS type,\r\n"
 			+ "  CASE \r\n"
 			+ "    WHEN i.id_user IS NOT NULL THEN u.matricule \r\n"
 			+ "    ELSE mf.matricule \r\n"
@@ -90,7 +90,7 @@ public interface InscriptionRepository extends JpaRepository < Inscription  , Lo
 			+ "LEFT JOIN membre_famille m ON i.id_membre_famille = m.id_membre_famille\r\n"
 			+ "LEFT JOIN utilisateur mf ON m.id_user = mf.id\r\n"
 			+ "JOIN discipline d ON i.id_discipline = d.id_discipline \r\n"
-			+ "WHERE (m.nom LIKE %:recherche% OR m.prenom LIKE %:recherche% OR u.nom LIKE %:recherche% OR u.prenom LIKE %:recherche% OR u.email LIKE %:recherche% OR m.email LIKE %:recherche% OR u.stegiste LIKE %:recherche% OR mf.nom LIKE %:recherche% OR discipline LIKE %:recherche%)and (i.status='en attente')"
+			+ "WHERE (m.nom LIKE %:recherche% OR m.prenom LIKE %:recherche% OR u.nom LIKE %:recherche% OR u.prenom LIKE %:recherche% OR u.email LIKE %:recherche% OR m.email LIKE %:recherche% OR u.type LIKE %:recherche% OR mf.nom LIKE %:recherche% OR discipline LIKE %:recherche%)and (i.status='en attente')"
 			+ "ORDER BY i.date_inscription DESC ",nativeQuery = true)
 	List<Object[]> RechercheInscription(@Param(value = "recherche") String recherche);
 
@@ -127,9 +127,9 @@ public interface InscriptionRepository extends JpaRepository < Inscription  , Lo
 			+ "    ELSE m.date_naissance \r\n"
 			+ "  END AS date_naissance,\r\n"
 			+ "  CASE \r\n"
-			+ "    WHEN i.id_user IS NOT NULL THEN u.stegiste \r\n"
-			+ "    ELSE mf.stegiste \r\n"
-			+ "  END AS stegiste,\r\n"
+			+ "    WHEN i.id_user IS NOT NULL THEN u.type \r\n"
+			+ "    ELSE mf.type \r\n"
+			+ "  END AS type,\r\n"
 			+ "  CASE \r\n"
 			+ "    WHEN i.id_user IS NOT NULL THEN u.nom \r\n"
 			+ "    ELSE mf.nom \r\n"
@@ -193,9 +193,9 @@ public interface InscriptionRepository extends JpaRepository < Inscription  , Lo
 			+ "    ELSE m.date_naissance \r\n"
 			+ "  END AS date_naissance,\r\n"
 			+ "  CASE \r\n"
-			+ "    WHEN i.id_user IS NOT NULL THEN u.stegiste \r\n"
-			+ "    ELSE mf.stegiste \r\n"
-			+ "  END AS stegiste,\r\n"
+			+ "    WHEN i.id_user IS NOT NULL THEN u.type \r\n"
+			+ "    ELSE mf.type \r\n"
+			+ "  END AS type,\r\n"
 			+ "  CASE \r\n"
 			+ "    WHEN i.id_user IS NOT NULL THEN u.nom \r\n"
 			+ "    ELSE mf.nom \r\n"
@@ -222,7 +222,7 @@ public interface InscriptionRepository extends JpaRepository < Inscription  , Lo
 			+ "LEFT JOIN membre_famille m ON i.id_membre_famille = m.id_membre_famille\r\n"
 			+ "LEFT JOIN utilisateur mf ON m.id_user = mf.id\r\n"
 			+ "JOIN discipline d ON i.id_discipline = d.id_discipline\r\n"
-			+ "WHERE (m.nom LIKE %:recherche% OR m.prenom LIKE %:recherche% OR u.nom LIKE %:recherche% OR u.prenom LIKE %:recherche% OR u.email LIKE %:recherche% OR m.email LIKE %:recherche% OR u.stegiste LIKE %:recherche% OR mf.nom LIKE %:recherche% OR discipline LIKE %:recherche%)and (i.status='accepte')"
+			+ "WHERE (m.nom LIKE %:recherche% OR m.prenom LIKE %:recherche% OR u.nom LIKE %:recherche% OR u.prenom LIKE %:recherche% OR u.email LIKE %:recherche% OR m.email LIKE %:recherche% OR u.type LIKE %:recherche% OR mf.nom LIKE %:recherche% OR discipline LIKE %:recherche%)and (i.status='accepte')"
 			+ "ORDER BY i.date_inscription DESC "
 			,nativeQuery = true)
 	List<Object[]> RechercherMembre(@Param(value = "recherche") String recherche);
@@ -272,11 +272,11 @@ public interface InscriptionRepository extends JpaRepository < Inscription  , Lo
 
 	+ " CASE \r\n"
 
-	+ " WHEN i.id_user IS NOT NULL THEN u.stegiste \r\n"
+	+ " WHEN i.id_user IS NOT NULL THEN u.type \r\n"
 
-	+ " ELSE mf.stegiste \r\n"
+	+ " ELSE mf.type \r\n"
 
-	+ " END AS stegiste,\r\n"
+	+ " END AS type,\r\n"
 
 	+ " CASE \r\n"
 
@@ -364,11 +364,11 @@ public interface InscriptionRepository extends JpaRepository < Inscription  , Lo
 
 	+ " CASE \r\n"
 
-	+ " WHEN i.id_user IS NOT NULL THEN u.stegiste \r\n"
+	+ " WHEN i.id_user IS NOT NULL THEN u.type \r\n"
 
-	+ " ELSE mf.stegiste \r\n"
+	+ " ELSE mf.type \r\n"
 
-	+ " END AS stegiste,\r\n"
+	+ " END AS type,\r\n"
 
 	+ " CASE \r\n"
 

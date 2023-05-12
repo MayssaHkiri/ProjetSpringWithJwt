@@ -13,12 +13,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
+
 import org.springframework.mail.javamail.JavaMailSender;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -241,7 +244,7 @@ public class ReservationController {
 
 	 @GetMapping("/consultation/{userId}")
 	    public ResponseEntity<List<Reservation>> getAllReservationsByUserId(@PathVariable("userId") Long userId) {
-	        Optional<List<Reservation>> optionalReservations = reservationRepo.findAllByUserId(userId);
+	        Optional<List<Reservation>> optionalReservations = reservationRepo.findByStatus(userId);
 	        if (optionalReservations.isPresent()) {
 	            List<Reservation> reservations = optionalReservations.get();
 	            return ResponseEntity.ok().body(reservations);
@@ -251,7 +254,7 @@ public class ReservationController {
 	    }
 	 @GetMapping("/reservations-en-attente")
 	 public ResponseEntity<List<Reservation>> getReservationsEnAttente() {
-	     List<Reservation> reservations = reservationRepo.findByStatus("en attente");
+	     List<Reservation> reservations = reservationRepo.rechercherParStatus("en attente");
 	     return new ResponseEntity<>(reservations, HttpStatus.OK);
 	 }
 
@@ -261,5 +264,24 @@ public class ReservationController {
 		 
 		 }
 	
+	 @GetMapping("/annuler/{resId}")
+	    public void annulerMembre(@PathVariable long resId  )  {
+		    
+		 Optional<Reservation> res = reservationRepo.findById(resId) ;
+				
+	        	Reservation reservation =res.get();
+	        	
+	            
+	        	reservation.setStatus("annulée");
+	        	reservationRepo.save(reservation);      
+	    
+	    }
+	 
+	 @GetMapping("/Notifications")
+	    public List<Reservation> ReservationsEnAtentte()  {
+		    
+		      
+	    return reservationRepo.findReservationsEnAttente();
+	    }
 	
 }

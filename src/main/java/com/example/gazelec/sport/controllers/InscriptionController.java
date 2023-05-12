@@ -61,9 +61,9 @@ public class InscriptionController {
 		
 		if("adherent".equals(role))
 		{
-		System.out.println("voula le role"+role);
+		
 		 Optional<User> optionalUser = utilRepo.findById(id);
-		 System.out.println("voula l'id user"+id);
+		
 			    if (optionalUser.isPresent()) { 
 			        User existingUser = optionalUser.get();
 			        i.setUser(existingUser);
