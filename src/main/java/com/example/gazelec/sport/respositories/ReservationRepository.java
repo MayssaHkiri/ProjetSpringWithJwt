@@ -15,9 +15,12 @@ import com.example.gazelec.sport.models.Reservation;
 public interface ReservationRepository extends JpaRepository<Reservation, Long>{
 	
 	//Optional<List<Reservation>> findByDate(Date date);
-	@Query("SELECT r FROM Reservation r WHERE r.date = :date AND r.terrain.id_terrain = :terrainId")
+	@Query("SELECT r FROM Reservation r WHERE r.date = :date AND r.terrain.id_terrain = :terrainId AND (r.status = 'en attente' OR r.status = 'acceptée')")
 	Optional<List<Reservation>> findByDateAndTerrain(@Param("date") Date date, @Param("terrainId") Long terrainId);
 
 	Optional<List<Reservation>> findAllByUserId(Long userId);
-
+     
+	@Query("SELECT r FROM Reservation r WHERE r.date = :date AND r.terrain.id_terrain = :terrainId AND (r.status = 'en attente' OR r.status = 'acceptée') ORDER BY STR_TO_DATE(r.Hdebut, '%H:%i')")
+	Optional<List<Reservation>> findByDateAndTerrainAndStatus(@Param("date") Date date, @Param("terrainId") Long terrainId);
+	List<Reservation> findByStatus(String status);
 }

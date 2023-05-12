@@ -10,7 +10,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.gazelec.sport.models.Inscription;
 import com.example.gazelec.sport.models.MessageResponse;
 import com.example.gazelec.sport.models.Reservation;
 import com.example.gazelec.sport.models.Terrain;
@@ -28,6 +32,7 @@ import com.example.gazelec.sport.models.User;
 import com.example.gazelec.sport.respositories.ReservationRepository;
 import com.example.gazelec.sport.respositories.TerrainRepository;
 import com.example.gazelec.sport.respositories.UserRepository;
+import com.example.gazelec.sport.services.UserService;
 
 @RequestMapping ("/reservation")
 @CrossOrigin("*")
@@ -40,6 +45,10 @@ public class ReservationController {
 	private TerrainRepository terrainRepo ;
 	@Autowired 
 	private ReservationRepository reservationRepo ; 
+	@Autowired
+	private UserService userService ;
+	@Autowired
+    private JavaMailSender javaMailSender;
 	
 	@PostMapping("/ajouter")
 	public ResponseEntity<?> ajouterReservation (@RequestBody Reservation R , @RequestParam Long idUser , @RequestParam Long idTerrain)
@@ -155,6 +164,80 @@ public class ReservationController {
 
 	}
 
+	@GetMapping("/liste/{dateString}/{terrainId}")
+	public ResponseEntity<List<Reservation>> getReservationsByDateAndTerrainAndStatus(@PathVariable String dateString , @PathVariable("terrainId") Long terrainId) {
+
+	    try {
+		 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	     Date date = new Date(sdf.parse(dateString).getTime());
+	    Optional<List<Reservation>> reservations = reservationRepo.findByDateAndTerrainAndStatus(date, terrainId);
+	    if (reservations.isPresent()) {
+	        return new ResponseEntity<>(reservations.get(), HttpStatus.OK);
+	    } else {
+	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	    }
+	    }
+	    catch (ParseException e) {
+	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	    }
+
+	}
+	
+	
+	@GetMapping("/validation/{id}/{email}")
+	public boolean validerReservation (@PathVariable long id , @PathVariable String email ) {
+		boolean exist= true ; 
+		Optional <User> user = userService.FindUserByMail(email) ; 
+		 if (!user.isPresent()) {
+	            System.out.println("Utilisateur n'existe pas");
+	            exist=false;
+	        }
+		 else {
+			 Optional <Reservation> res = reservationRepo.findById(id) ; 
+			 Reservation reservation = res.get() ; 
+			 reservation.setStatus("acceptée") ; 
+			 reservationRepo.save(reservation); 
+			 User u = user.get() ; 
+			 
+			 
+			  SimpleMailMessage mail = new SimpleMailMessage();
+		        mail.setFrom("gazelecprojet@gmail.com");
+		        mail.setTo(u.getEmail());
+		        mail.setSubject("Validation de resevation ");
+		        mail.setText("votre demande de reservation est approuvéé : \n le "+ reservation.getDate() + "de " + reservation.getHdebut() + "à" + reservation.getHfin());
+		        System.out.println("Mail "+mail);
+		        javaMailSender.send(mail);
+		 }return exist;
+	}
+	
+	@GetMapping("/refuser/{id}/{email}")
+	public boolean RefuserReservation (@PathVariable long id , @PathVariable String email ) {
+		boolean exist= true ; 
+		Optional <User> user = userService.FindUserByMail(email) ; 
+		 if (!user.isPresent()) {
+	            System.out.println("Utilisateur n'existe pas");
+	            exist=false;
+	        }
+		 else {
+			 Optional <Reservation> res = reservationRepo.findById(id) ; 
+			 Reservation reservation = res.get() ; 
+			 reservation.setStatus("refusée") ; 
+			 reservationRepo.save(reservation); 
+			 User u = user.get() ; 
+			 
+			 
+			  SimpleMailMessage mail = new SimpleMailMessage();
+		        mail.setFrom("gazelecprojet@gmail.com");
+		        mail.setTo(u.getEmail());
+		        mail.setSubject("Validation de resevation ");
+		        mail.setText("votre demande de reservation est refusée : \n le "+ reservation.getDate() + "de " + reservation.getHdebut() + "à" + reservation.getHfin() + "\n" +"vous pouvez choisir un autre horaire");
+		        System.out.println("Mail "+mail);
+		        javaMailSender.send(mail);
+		 }return exist;
+	}
+	
+	
+	
 
 	 @GetMapping("/consultation/{userId}")
 	    public ResponseEntity<List<Reservation>> getAllReservationsByUserId(@PathVariable("userId") Long userId) {
@@ -166,6 +249,12 @@ public class ReservationController {
 	            return ResponseEntity.notFound().build();
 	        }
 	    }
+	 @GetMapping("/reservations-en-attente")
+	 public ResponseEntity<List<Reservation>> getReservationsEnAttente() {
+	     List<Reservation> reservations = reservationRepo.findByStatus("en attente");
+	     return new ResponseEntity<>(reservations, HttpStatus.OK);
+	 }
+
 	 @DeleteMapping ("/{id}")
 	 public void deleteReservation (@PathVariable Long id ) {
 		 reservationRepo.deleteById(id) ; 
