@@ -21,13 +21,12 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.gazelec.sport.models.Inscription;
 import com.example.gazelec.sport.models.MessageResponse;
 import com.example.gazelec.sport.models.Reservation;
 import com.example.gazelec.sport.models.Terrain;
@@ -244,7 +243,7 @@ public class ReservationController {
 
 	 @GetMapping("/consultation/{userId}")
 	    public ResponseEntity<List<Reservation>> getAllReservationsByUserId(@PathVariable("userId") Long userId) {
-	        Optional<List<Reservation>> optionalReservations = reservationRepo.findByStatus(userId);
+	        Optional<List<Reservation>> optionalReservations = reservationRepo.rechercherParStatus(userId);
 	        if (optionalReservations.isPresent()) {
 	            List<Reservation> reservations = optionalReservations.get();
 	            return ResponseEntity.ok().body(reservations);
@@ -252,10 +251,14 @@ public class ReservationController {
 	            return ResponseEntity.notFound().build();
 	        }
 	    }
-	 @GetMapping("/reservations-en-attente")
+	/* @GetMapping("/reservations-en-attente")
 	 public ResponseEntity<List<Reservation>> getReservationsEnAttente() {
-	     List<Reservation> reservations = reservationRepo.rechercherParStatus("en attente");
+	     List<Reservation> reservations = reservationRepo.findByStatus("en attente");
 	     return new ResponseEntity<>(reservations, HttpStatus.OK);
+	 }*/
+	 @GetMapping("/reservations-en-attente/{terrainId}")
+	 public List<Reservation> getReservationsEnAttenteByTerrain(@PathVariable Long terrainId) {
+	     return reservationRepo.consulterReservationEnattenteSelonTerrain(terrainId);
 	 }
 
 	 @DeleteMapping ("/{id}")

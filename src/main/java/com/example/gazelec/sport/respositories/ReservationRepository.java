@@ -23,10 +23,12 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long>{
      
 	@Query("SELECT r FROM Reservation r WHERE r.date = :date AND r.terrain.id_terrain = :terrainId AND (r.status = 'en attente' OR r.status = 'acceptée') ORDER BY STR_TO_DATE(r.Hdebut, '%H:%i')")
 	Optional<List<Reservation>> findByDateAndTerrainAndStatus(@Param("date") Date date, @Param("terrainId") Long terrainId);
-	List<Reservation> rechercherParStatus (String status);
+	
+	@Query("SELECT r FROM Reservation r WHERE r.status = 'en attente' AND r.terrain.id_terrain = :terrainId  ")
+	List<Reservation> consulterReservationEnattenteSelonTerrain (@Param("terrainId") Long terrainId );
 
 	@Query("SELECT r FROM Reservation r WHERE r.status <> 'annulée' AND r.user.id = :userId ORDER BY r.date DESC")
-	Optional<List<Reservation>> findByStatus(@Param("userId") Long userId);
+	Optional<List<Reservation>> rechercherParStatus (@Param("userId") Long userId);
   
 	@Query("SELECT r FROM Reservation r WHERE r.status = 'en attente'")
 	List<Reservation> findReservationsEnAttente();
