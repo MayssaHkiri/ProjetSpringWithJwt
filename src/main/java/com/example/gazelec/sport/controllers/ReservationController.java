@@ -205,9 +205,18 @@ public class ReservationController {
 			  SimpleMailMessage mail = new SimpleMailMessage();
 		        mail.setFrom("gazelecprojet@gmail.com");
 		        mail.setTo(u.getEmail());
-		        mail.setSubject("Validation de resevation ");
-		        mail.setText("votre demande de reservation est approuvéé : \n le "+ reservation.getDate() + "de " + reservation.getHdebut() + "à" + reservation.getHfin());
-		        System.out.println("Mail "+mail);
+		        mail.setSubject("Validation de votre demande de réservation");
+		        mail.setText("Cher(e) "+u.getNom()+",\n\n"
+		                + "Nous avons le plaisir de vous informer que votre demande de réservation pour le terrain de Tennis n°" + reservation.getTerrain().getNum_terrain() + " a été approuvée.\n\n"
+		                + "Voici les détails de votre réservation :\n"
+		                + "- Date : " + reservation.getDate() + "\n"
+		                + "- Heure de début : " + reservation.getHdebut() + "\n"
+		                + "- Heure de fin : " + reservation.getHfin() + "\n\n"
+		                + "Nous vous rappelons de respecter les règles d'utilisation du terrain et de faire preuve de fair-play envers les autres membres du club.\n\n"
+		                + "En cas de besoin d'assistance supplémentaire, n'hésitez pas à nous contacter par téléphone au 71287053 ou par e-mail à gazelecprojet@gmail.com.\n\n"
+		                + "Nous vous souhaitons une agréable expérience lors de votre réservation et nous vous remercions de votre confiance.\n\n"
+		                + "Cordialement,\n"
+		                + "L'équipe de La Gazelec");
 		        javaMailSender.send(mail);
 		 }return exist;
 	}
@@ -231,9 +240,17 @@ public class ReservationController {
 			  SimpleMailMessage mail = new SimpleMailMessage();
 		        mail.setFrom("gazelecprojet@gmail.com");
 		        mail.setTo(u.getEmail());
-		        mail.setSubject("Validation de resevation ");
-		        mail.setText("votre demande de reservation est refusée : \n le "+ reservation.getDate() + "de " + reservation.getHdebut() + "à" + reservation.getHfin() + "\n" +"vous pouvez choisir un autre horaire");
-		        System.out.println("Mail "+mail);
+		        mail.setSubject("Refus de votre demande de réservation");
+		        mail.setText("Cher(e) "+u.getNom()+",\n\n"
+		                + "Nous regrettons de vous informer que votre demande de réservation pour le terrain de Tennis n°" + reservation.getTerrain().getNum_terrain() + " a été refusée.\n\n"
+		                + "Malheureusement, nous ne sommes pas en mesure d'accepter votre demande pour les raisons suivantes :\n"
+		                + "- Le terrain est déjà réservé à la même période.\n"
+		              
+		                + "- Les créneaux horaires demandés sont déjà complets.\n\n"
+		                + "Nous vous invitons à essayer de nouvelles dates ou créneaux horaires disponibles pour effectuer votre réservation. Si vous avez des questions ou des préoccupations, n'hésitez pas à nous contacter par téléphone au 71287053 ou par e-mail à gazelecprojet@gmail.com.\n\n"
+		                + "Nous nous excusons pour les désagréments causés et nous vous remercions de votre compréhension.\n\n"
+		                + "Cordialement,\n"
+		                + "L'équipe de La Gazelec");
 		        javaMailSender.send(mail);
 		 }return exist;
 	}
