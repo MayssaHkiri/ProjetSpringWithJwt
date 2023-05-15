@@ -111,8 +111,11 @@ public class UserController {
 	        mail.setFrom("gazelecprojet@gmail.com");
 	        mail.setTo(userr.getEmail());
 	        mail.setSubject("Récupération du mot de passe");
-	        mail.setText("Pour récupérer le mot de passe cliquez sur ce lien : \n " + Url );
-	        System.out.println("Mail "+mail);
+	        mail.setText("Cher(e) "+userr.getNom()+",\n\n"
+	                + "Vous avez demandé la récupération de votre mot de passe pour votre compte adhérent. Veuillez cliquer sur le lien ci-dessous pour procéder à la récupération :\n\n"
+	                + Url + "\n\n"
+	              
+	                + "L'équipe de La Gazelec");
 	        javaMailSender.send(mail);
 	       
 	        }   return exist;
