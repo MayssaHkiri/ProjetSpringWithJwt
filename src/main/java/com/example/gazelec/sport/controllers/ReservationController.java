@@ -277,7 +277,10 @@ public class ReservationController {
 	 public List<Reservation> getReservationsEnAttenteByTerrain(@PathVariable Long terrainId) {
 	     return reservationRepo.consulterReservationEnattenteSelonTerrain(terrainId);
 	 }
-
+     @GetMapping ("/reservations-acceptee/{terrainId}")
+     public List<Reservation> getReservationAccepteeByTerrai (@PathVariable Long terrainId ) {
+    	 return reservationRepo.consulterReservationAccepteeSelonTerrain(terrainId) ; 
+     }
 	 @DeleteMapping ("/{id}")
 	 public void deleteReservation (@PathVariable Long id ) {
 		 reservationRepo.deleteById(id) ; 
