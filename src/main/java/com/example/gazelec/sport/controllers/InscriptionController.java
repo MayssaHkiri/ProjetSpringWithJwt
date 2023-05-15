@@ -124,7 +124,7 @@ public class InscriptionController {
        mail.setTo(userr.getEmail());
        mail.setSubject("Félicitations pour votre inscription au Club Sportif La Gazelec");
        mail.setText("Cher "+userr.getNom()+" ,\n\n"
-               + "Nous sommes ravis de vous annoncer que vous êtes officiellement devenu membre du Club Sportif La Gazelec à la discipline "+userr.getDiscipline().getDiscipline()+" ! \n\n"
+               + "Nous sommes ravis de vous annoncer que vous êtes officiellement devenu membre du Club Sportif La Gazelec à la discipline "+ins.getDiscipline().getDiscipline()+" ! \n\n"
                + "En tant que membre, vous bénéficiez désormais d'un accès exclusif à nos installations sportives de qualité et à nos diverses activités.\n"
                + "Que ce soit pour pratiquer votre discipline préférée, participer à des compétitions ou simplement profiter d'un environnement sportif convivial, nous sommes là pour répondre à vos attentes.\n\n"
                + "N'hésitez pas à contacter notre administration pour toute question ou demande d'informations supplémentaires. Nous serons ravis de vous aider.\n"
@@ -161,7 +161,7 @@ public class InscriptionController {
         mail.setTo(userr.getEmail());
         mail.setSubject("Refus de demande d'inscription");
         mail.setText("Cher "+userr.getNom() +",\n\n"
-                + "Nous avons pris en compte votre demande d'inscription au Club Sportif La Gazelec. Après avoir examiné attentivement votre candidature, nous regrettons de vous informer que nous ne pouvons pas donner une suite favorable à votre demande d'inscription à la discipline "+userr.getDiscipline().getDiscipline()+".\n\n"
+                + "Nous avons pris en compte votre demande d'inscription au Club Sportif La Gazelec. Après avoir examiné attentivement votre candidature, nous regrettons de vous informer que nous ne pouvons pas donner une suite favorable à votre demande d'inscription à la discipline "+ins.getDiscipline().getDiscipline()+".\n\n"
               
                 + "Nous vous remercions néanmoins de l'intérêt que vous avez porté à notre club et vous encourageons à explorer d'autres opportunités sportives qui pourraient correspondre à vos attentes.\n\n"
                 + "Si vous avez des questions ou souhaitez obtenir plus d'informations sur notre processus de sélection, n'hésitez pas à nous contacter. Nous serons heureux de vous fournir des éclaircissements.\n"
@@ -216,7 +216,7 @@ public class InscriptionController {
 	        mail.setTo(userr.getEmail());
 	        mail.setSubject("Suppression de votre inscription à une discipline");
 	        mail.setText("Cher(e) "+userr.getNom()+",\n\n"
-	                + "Nous tenons à vous informer que votre inscription à la discipline "+userr.getDiscipline().getDiscipline()+" du Club Sportif La Gazelec a été annulée.\n\n"
+	                + "Nous tenons à vous informer que votre inscription du Club Sportif de La Gazelec a été annulée.\n\n"
 	               
 	               
 	                + "Si vous avez des questions ou des préoccupations concernant cette décision, nous vous encourageons à nous contacter pour en discuter davantage.\n\n"
