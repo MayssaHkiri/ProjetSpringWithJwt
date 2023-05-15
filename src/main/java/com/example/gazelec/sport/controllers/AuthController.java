@@ -230,9 +230,15 @@ public class AuthController {
 	        SimpleMailMessage mail = new SimpleMailMessage();
 	        mail.setFrom("gazelecprojet@gmail.com");
 	        mail.setTo(addUserRequest.getEmail());
-	        mail.setSubject("Nouveau mot de passe ");
-	        mail.setText("Vous etes un nouveau utilisateur chez Gazelec.tn  \n vous trouvez votre mot de passe: \n " + password  );
-	        System.out.println("Mail "+mail);
+	        mail.setSubject("Nouveau mot de passe");
+	        mail.setText("Cher(e) "+addUserRequest.getLastName()+",\n\n"
+	                + "Vous êtes un nouveau utilisateur chez l'espace administratif de la Gazelec. Voici votre nouveau mot de passe :\n\n"
+	                + password + "\n\n"
+	                + "Veuillez vous connecter à votre compte en utilisant ce mot de passe. \n\n"
+	                + "Si vous avez des questions ou besoin d'assistance, n'hésitez pas à nous contacter.\n\n"
+	              
+	                + "Cordialement,\n"
+	                + "L'équipe de La Gazelec");
 	        javaMailSender.send(mail);
 	       
 		   

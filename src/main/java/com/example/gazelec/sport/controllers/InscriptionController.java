@@ -119,13 +119,20 @@ public class InscriptionController {
         	InscriRepo.save(ins);      
        User  userr = user.get();
        
-       
-        SimpleMailMessage mail = new SimpleMailMessage();
-        mail.setFrom("gazelecprojet@gmail.com");
-        mail.setTo(userr.getEmail());
-        mail.setSubject("Validation d'inscription");
-        mail.setText("Félicitations , vous etes membre dans le club sportif de la gazelec : \n "  );
-        System.out.println("Mail "+mail);
+       SimpleMailMessage mail = new SimpleMailMessage();
+       mail.setFrom("gazelecprojet@gmail.com");
+       mail.setTo(userr.getEmail());
+       mail.setSubject("Félicitations pour votre inscription au Club Sportif La Gazelec");
+       mail.setText("Cher "+userr.getNom()+" ,\n\n"
+               + "Nous sommes ravis de vous annoncer que vous êtes officiellement devenu membre du Club Sportif La Gazelec à la discipline "+userr.getDiscipline().getDiscipline()+" ! \n\n"
+               + "En tant que membre, vous bénéficiez désormais d'un accès exclusif à nos installations sportives de qualité et à nos diverses activités.\n"
+               + "Que ce soit pour pratiquer votre discipline préférée, participer à des compétitions ou simplement profiter d'un environnement sportif convivial, nous sommes là pour répondre à vos attentes.\n\n"
+               + "N'hésitez pas à contacter notre administration pour toute question ou demande d'informations supplémentaires. Nous serons ravis de vous aider.\n"
+               + "Vous pouvez nous joindre par téléphone au 71287053 ou par e-mail à gazelecprojet@gmail.com.\n\n"
+               + "Encore une fois, félicitations et bienvenue dans notre club ! Nous sommes impatients de vous voir participer à nos activités sportives.\n\n"
+               + "Sportivement,\n"
+               + "L'équipe du Club Sportif La Gazelec");
+       System.out.println("Mail : " + mail);
         javaMailSender.send(mail);
        
         }   return exist;
@@ -152,9 +159,17 @@ public class InscriptionController {
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setFrom("gazelecprojet@gmail.com");
         mail.setTo(userr.getEmail());
-        mail.setSubject("Validation d'inscription");
-        mail.setText("Demande d'inscription refusé , vous pouvez réessayer l'inscription : \n "  );
-        System.out.println("Mail "+mail);
+        mail.setSubject("Refus de demande d'inscription");
+        mail.setText("Cher "+userr.getNom() +",\n\n"
+                + "Nous avons pris en compte votre demande d'inscription au Club Sportif La Gazelec. Après avoir examiné attentivement votre candidature, nous regrettons de vous informer que nous ne pouvons pas donner une suite favorable à votre demande d'inscription à la discipline "+userr.getDiscipline().getDiscipline()+".\n\n"
+              
+                + "Nous vous remercions néanmoins de l'intérêt que vous avez porté à notre club et vous encourageons à explorer d'autres opportunités sportives qui pourraient correspondre à vos attentes.\n\n"
+                + "Si vous avez des questions ou souhaitez obtenir plus d'informations sur notre processus de sélection, n'hésitez pas à nous contacter. Nous serons heureux de vous fournir des éclaircissements.\n"
+                + "Vous pouvez nous joindre par téléphone au 71287053 ou par e-mail à gazelecprojet@gmail.com.\n\n"
+                + "Nous vous souhaitons bonne chance dans vos futurs projets sportifs et espérons que vous trouverez une activité qui vous conviendra.\n\n"
+                + "Cordialement,\n"
+                + "L'équipe du Club Sportif La Gazelec");
+        System.out.println("Mail : " + mail);
         javaMailSender.send(mail);
        
         } 
@@ -199,9 +214,17 @@ public class InscriptionController {
 	        SimpleMailMessage mail = new SimpleMailMessage();
 	        mail.setFrom("gazelecprojet@gmail.com");
 	        mail.setTo(userr.getEmail());
-	        mail.setSubject("Iinscription dans la discipline sportif de la gazelec");
-	        mail.setText("Vous n'etes plus un membre dans l'équioe sportive de la gazelec  : \n "  );
-	        System.out.println("Mail "+mail);
+	        mail.setSubject("Suppression de votre inscription à une discipline");
+	        mail.setText("Cher(e) "+userr.getNom()+",\n\n"
+	                + "Nous tenons à vous informer que votre inscription à la discipline "+userr.getDiscipline().getDiscipline()+" du Club Sportif La Gazelec a été annulée.\n\n"
+	               
+	               
+	                + "Si vous avez des questions ou des préoccupations concernant cette décision, nous vous encourageons à nous contacter pour en discuter davantage.\n\n"
+	                + "Vous pouvez nous joindre par téléphone au 71287053 ou par e-mail à gazelecprojet@gmail.com.\n\n"
+	                + "Nous vous remercions pour votre compréhension et espérons que vous trouverez une autre activité sportive qui correspondra à vos attentes.\n\n"
+	                + "Cordialement,\n"
+	                + "L'équipe du Club Sportif La Gazelec");
+	        System.out.println("Mail : " + mail);
 	        javaMailSender.send(mail);
 	       
 	        } 
