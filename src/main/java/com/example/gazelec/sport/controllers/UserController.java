@@ -143,6 +143,36 @@ public class UserController {
 	      			
 	 			}return existToken;
 	   }
+	  @GetMapping("/ChangerPassword/{Id}/{OldPassword}/{NewPassword}")
+	    public boolean findUserByResetToken (@PathVariable long Id,@PathVariable String OldPassword,@PathVariable String NewPassword) {
+		  boolean existToken=true;
+		  
+		  Optional<User> user = utilRepo.findById(Id);
+		 
+	             if (!user.isPresent()) {
+	 				
+	 				existToken=false;
+	 			} else {
+	 				User userr = user.get();
+	 				 System.out.println("Mot de passe"+userr.getNom());
+	 				 System.out.println("Mot de passe"+userr.getPassword());
+	 				System.out.println("Mot de passe"+encoder.encode(OldPassword.trim()));
+	 				 System.out.println("Mot de passe"+OldPassword);
+	 			   if(!userr.getPassword().equals(encoder.encode(OldPassword.trim())) )
+	 			   {existToken=false;
+	 			   }
+	 			   else {
+
+		 				userr.setPassword( encoder.encode(NewPassword.trim()));
+		 			
+		 				 System.out.println("Mot de passe"+userr.getPassword());
+		 				 utilRepo.save(userr);
+	 			   }
+	 				
+	 				
+	      			
+	 			}return existToken;
+	   }
 	
 
 

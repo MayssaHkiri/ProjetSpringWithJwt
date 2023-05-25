@@ -16,8 +16,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	Optional<User> findByEmail(String email);
 	@Query(value = "SELECT * FROM utilisateur WHERE reset_password_token = :token",nativeQuery = true)
 	 Optional<User> findByResetToken(@Param(value = "token") String token);
-	
-	
+
 	@Query(value = "SELECT u.*,r.name FROM utilisateur u INNER JOIN roles r ON u.id_role = r.id_role WHERE r.name = :roleNom",nativeQuery = true)
     public List<User> ListByRole(@Param(value = "roleNom") String role);
 	
