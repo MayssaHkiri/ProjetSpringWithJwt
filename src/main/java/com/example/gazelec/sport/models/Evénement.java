@@ -31,8 +31,15 @@ public class Evénement {
 	 private String description;
 	 @Value("${nb_consultation:0}")
 	 private Long nb_consultation;
-	 
+	 @NotBlank
+	 private String heure ; 
 	
+	public String getHeure() {
+		return heure;
+	}
+	public void setHeure(String heure) {
+		this.heure = heure;
+	}
 	public void setNb_consultation(Long nb_consultation) {
 		this.nb_consultation = nb_consultation;
 	}
@@ -75,7 +82,7 @@ public class Evénement {
 	
 	
 	public Evénement(Long id, @NotBlank String titre, @NotBlank String lieu, String fileName, Date date,
-			@NotBlank String description) {
+			@NotBlank String description , @NotBlank String heure  ) {
 		super();
 		this.id = id;
 		this.titre = titre;
@@ -83,6 +90,7 @@ public class Evénement {
 		this.fileName = fileName;
 		this.date = date;
 		this.description = description;
+		this.heure = heure ; 
 	}
 	public Date getDate() {
 		return date;
