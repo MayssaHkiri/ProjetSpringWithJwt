@@ -257,5 +257,38 @@ public class AuthController {
 	    
 	    return exist;
    }
+   @PostMapping("/ModifierPassword")
+	  public boolean ModifierPassword(@Valid @RequestBody LoginRequest loginRequest) {
+		    Authentication authentication = authenticationManager.authenticate(
+		            new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+		    SecurityContextHolder.getContext().setAuthentication(authentication);
+		    System.out.println("authentication -------- " + authentication);
+		    String jwt = jwtUtils.generateJwtToken(authentication);
+		    UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+		    String role = userDetails.getAuthorities().stream()
+		            .map(item -> item.getAuthority())
+		            .findFirst()
+		            .orElse(null);
+		    System.out.println("userDetails ------- " + userDetails.toString());
+		    return authentication.isAuthenticated();
+		}
+   @GetMapping("/ChangerPassword/{Id}/{NewPassword}")
+   public boolean findUserByResetToken (@PathVariable Long Id,@PathVariable String NewPassword) {
+	  boolean existToken=true;
+	  
+	  Optional<User> user = utilRepo.findById(Id);
+	 
+            if (!user.isPresent()) {
+				
+				existToken=false;
+			} else {
+				User userr = user.get();
+			userr.setPassword( encoder.encode(NewPassword.trim()));
+	 			
+	 				 System.out.println("Mot de passe"+userr.getPassword());
+	 				 utilRepo.save(userr);
+			}return existToken;
+  }
 
+ 
 }
