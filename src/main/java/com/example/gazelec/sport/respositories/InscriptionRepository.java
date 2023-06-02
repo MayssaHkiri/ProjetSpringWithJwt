@@ -469,6 +469,6 @@ public interface InscriptionRepository extends JpaRepository < Inscription  , Lo
 	List<Object[]> RechercheMembresParModerateur(@Param(value = "recherche")String recherche , @Param(value= "disModerateur") String discipline ) ;
 	
   //  List<Inscription> findByUserId(Long userId);
-	  @Query("SELECT i.discipline FROM Inscription i WHERE i.user.id = :userId")
+	  @Query("SELECT i.discipline FROM Inscription i WHERE i.user.id = :userId and i.status='accepte' ")
 	    List<Discipline> findDisciplinesByUserId(@Param("userId") Long userId);
 }
