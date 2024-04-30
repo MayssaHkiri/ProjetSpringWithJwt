@@ -1,0 +1,30 @@
+package com.example.spring.camping.respositories;
+
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import com.example.spring.camping.models.ManageUsers.User;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+	Boolean existsByEmail(String email);
+	Optional<User> findByEmail(String email);
+	@Query(value = "SELECT * FROM utilisateur WHERE reset_password_token = :token",nativeQuery = true)
+	 Optional<User> findByResetToken(@Param(value = "token") String token);
+
+	@Query(value = "SELECT u.*,r.name FROM utilisateur u INNER JOIN roles r ON u.id_role = r.id_role WHERE r.name = :roleNom",nativeQuery = true)
+    public List<User> ListByRole(@Param(value = "roleNom") String role);
+	
+	@Query(value = "SELECT * FROM utilisateur u INNER JOIN roles r ON u.ID_ROLE = r.ID_ROLE WHERE r.name = :roleNom and (u.nom LIKE %:recherche% OR u.prenom LIKE %:recherche% OR u.email LIKE %:recherche% ) ",nativeQuery = true)
+
+	public List<User> RechercherAdherent(@Param(value = "roleNom") String role ,@Param(value = "recherche") String critere);
+	
+
+
+}
